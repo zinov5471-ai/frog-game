@@ -3,138 +3,187 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🐸 Лягушка ловит мух</title>
+    <title>🐸 Лягушка-Мухолов PRO</title>
     <style>
         /* ОСНОВНЫЕ СТИЛИ */
         * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
         
         body {
-            background: #2e7d32;
+            background: linear-gradient(135deg, #1b5e20, #2e7d32);
             color: white;
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             text-align: center;
-            padding: 10px;
             min-height: 100vh;
+            padding: 10px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 10px;
+        }
+        
+        /* ШАПКА */
+        .header {
+            background: rgba(0, 100, 0, 0.8);
+            padding: 15px;
+            border-radius: 20px;
+            margin-bottom: 15px;
+            border: 3px solid #0d3b1c;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
         
         h1 {
-            color: yellow;
-            margin: 10px 0;
-            font-size: 22px;
+            color: #ffeb3b;
+            margin-bottom: 10px;
+            font-size: 24px;
+            text-shadow: 2px 2px 0 #000;
         }
         
-        .stats {
-            background: #1b5e20;
+        /* СТАТИСТИКА */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .stat-box {
+            background: rgba(0, 80, 0, 0.7);
             padding: 10px;
             border-radius: 10px;
-            margin: 10px auto;
-            width: 95%;
-            display: flex;
-            justify-content: space-around;
-            font-weight: bold;
+            border: 2px solid #1b5e20;
         }
         
-        .score {
-            color: yellow;
-            font-size: 20px;
+        .stat-label {
+            font-size: 12px;
+            color: #c8e6c9;
+            margin-bottom: 5px;
+        }
+        
+        .stat-value {
+            font-size: 22px;
+            color: #ffeb3b;
+            font-weight: bold;
         }
         
         /* ИГРОВОЕ ПОЛЕ */
         .game-area {
-            background: #4caf50;
+            background: linear-gradient(to bottom, #4caf50, #388e3c);
             border: 5px solid #1b5e20;
-            border-radius: 15px;
+            border-radius: 20px;
             height: 60vh;
-            max-height: 400px;
+            max-height: 450px;
             position: relative;
-            margin: 10px auto;
+            margin: 15px auto;
             overflow: hidden;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.3);
         }
         
         /* ЛЯГУШКА */
         #frog {
             position: absolute;
-            bottom: 20px;
+            bottom: 30px;
             left: 50%;
-            margin-left: -70px;
-            width: 140px;
-            height: 100px;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 110px;
             cursor: pointer;
             z-index: 100;
+            transition: transform 0.2s;
+        }
+        
+        #frog:active {
+            transform: translateX(-50%) scale(0.95);
         }
         
         .frog-body {
-            width: 140px;
-            height: 100px;
-            background: #4caf50;
-            border-radius: 70px 70px 60px 60px;
-            border: 4px solid #2e7d32;
+            width: 150px;
+            height: 110px;
+            background: linear-gradient(145deg, #4caf50, #66bb6a);
+            border-radius: 75px 75px 50px 50px;
+            border: 5px solid #2e7d32;
             position: relative;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
         }
         
         /* Глаза */
-        #eye-left, #eye-right {
+        .eye {
             position: absolute;
-            top: 15px;
-            width: 30px;
-            height: 30px;
+            top: 20px;
+            width: 35px;
+            height: 35px;
             background: white;
-            border: 3px solid black;
-            border-radius: 15px;
+            border-radius: 50%;
+            border: 3px solid #1b5e20;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
         }
         
-        #eye-left { left: 25px; }
-        #eye-right { right: 25px; }
+        .eye-left { left: 25px; }
+        .eye-right { right: 25px; }
         
-        /* Зрачки */
-        #pupil-left, #pupil-right {
-            width: 15px;
-            height: 15px;
-            background: black;
-            border-radius: 8px;
+        .pupil {
+            width: 18px;
+            height: 18px;
+            background: #1b5e20;
+            border-radius: 50%;
             margin: 6px auto 0;
+            position: relative;
+        }
+        
+        .pupil::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 6px;
+            height: 6px;
+            background: white;
+            border-radius: 50%;
         }
         
         /* Рот */
-        #mouth {
+        .mouth {
             position: absolute;
             bottom: 25px;
-            left: 50px;
-            width: 40px;
-            height: 15px;
-            background: #333;
-            border-radius: 0 0 20px 20px;
-        }
-        
-        /* ЯЗЫК - СДЕЛАЕМ ДЛИННЕЕ И С ЭФФЕКТОМ */
-        #tongue {
-            position: absolute;
-            bottom: 20px;
-            left: 67px;
-            width: 8px; /* Немного шире */
-            height: 0;
-            background: linear-gradient(to top, #ff4444, #ff8888); /* Градиент */
-            border-radius: 4px;
-            transform-origin: bottom center;
-            transition: height 0.2s ease-out;
-            box-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
-            z-index: 90;
-        }
-        
-        /* Кончик языка */
-        .tongue-tip {
-            position: absolute;
-            bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 16px;
-            height: 16px;
+            width: 50px;
+            height: 20px;
+            background: #333;
+            border-radius: 0 0 25px 25px;
+            border-bottom: 3px solid #1b5e20;
+        }
+        
+        /* ЯЗЫК */
+        .tongue {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10px;
+            height: 0;
+            background: linear-gradient(to top, #ff4444, #ff8888);
+            border-radius: 5px;
+            transition: height 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 90;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        }
+        
+        .tongue-tip {
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
             background: #ff4444;
             clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-            border-radius: 0 0 8px 8px;
+            border-radius: 0 0 10px 10px;
         }
         
         /* Лист */
@@ -142,49 +191,108 @@
             position: absolute;
             bottom: 0;
             left: 50%;
-            margin-left: -90px;
-            width: 180px;
-            height: 60px;
-            background: #7cb342;
-            border-radius: 90px 90px 0 0;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 70px;
+            background: linear-gradient(to top, #8bc34a, #7cb342);
+            border-radius: 100px 100px 0 0;
             z-index: 50;
+            border-top: 5px solid #558b2f;
         }
         
-        /* МУШКИ С АНИМАЦИЕЙ ПОЕДАНИЯ */
+        /* МУШКИ РАЗНЫХ ТИПОВ */
         .fly {
             position: absolute;
-            width: 20px;
-            height: 20px;
-            background: black;
-            border-radius: 10px;
+            border-radius: 50%;
             z-index: 80;
-            transition: transform 0.5s, opacity 0.5s;
+            transition: transform 0.3s;
         }
         
-        /* Крылья мушек */
+        /* Обычная мушка */
+        .fly-normal {
+            width: 25px;
+            height: 25px;
+            background: #212121;
+            animation: flyNormal 3s infinite ease-in-out;
+        }
+        
+        /* Быстрая мушка */
+        .fly-fast {
+            width: 20px;
+            height: 20px;
+            background: #d32f2f;
+            animation: flyFast 2s infinite linear;
+        }
+        
+        /* Жирная мушка (больше очков) */
+        .fly-fat {
+            width: 35px;
+            height: 35px;
+            background: #ff9800;
+            animation: flyFat 4s infinite ease-in-out;
+        }
+        
+        /* Крылья */
         .fly::before, .fly::after {
             content: '';
             position: absolute;
+            border-radius: 50%;
+            top: 5px;
+            z-index: -1;
+        }
+        
+        .fly-normal::before, .fly-normal::after {
+            width: 30px;
+            height: 10px;
+            background: rgba(0,0,0,0.3);
+        }
+        
+        .fly-fast::before, .fly-fast::after {
             width: 25px;
             height: 8px;
-            background: rgba(0,0,0,0.3);
-            border-radius: 4px;
-            top: 5px;
+            background: rgba(211, 47, 47, 0.3);
+        }
+        
+        .fly-fat::before, .fly-fat::after {
+            width: 40px;
+            height: 15px;
+            background: rgba(255, 152, 0, 0.3);
         }
         
         .fly::before {
             left: -15px;
-            transform: rotate(-30deg);
+            transform: rotate(-25deg);
         }
         
         .fly::after {
             right: -15px;
-            transform: rotate(30deg);
+            transform: rotate(25deg);
+        }
+        
+        @keyframes flyNormal {
+            0%, 100% { transform: translate(0, 0) rotate(0); }
+            25% { transform: translate(40px, -30px) rotate(10deg); }
+            50% { transform: translate(-20px, -50px) rotate(-10deg); }
+            75% { transform: translate(30px, -20px) rotate(5deg); }
+        }
+        
+        @keyframes flyFast {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(60px, -40px); }
+            50% { transform: translate(-40px, -70px); }
+            75% { transform: translate(50px, -30px); }
+        }
+        
+        @keyframes flyFat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(30px, -20px) scale(1.05); }
+            50% { transform: translate(-15px, -35px) scale(1); }
+            75% { transform: translate(20px, -15px) scale(1.05); }
         }
         
         /* Анимация поедания */
         .fly.eaten {
-            animation: eatAnimation 0.6s forwards;
+            animation: eatAnimation 0.6s forwards !important;
         }
         
         @keyframes eatAnimation {
@@ -193,11 +301,11 @@
                 opacity: 1;
             }
             50% {
-                transform: translate(0, -20px) scale(0.5);
+                transform: translate(0, -30px) scale(0.7);
                 opacity: 0.7;
             }
             100% {
-                transform: translate(0, -40px) scale(0);
+                transform: translate(0, -60px) scale(0);
                 opacity: 0;
             }
         }
@@ -205,9 +313,9 @@
         /* ЭФФЕКТ ПОПАДАНИЯ */
         .hit-effect {
             position: absolute;
-            width: 40px;
-            height: 40px;
-            background: radial-gradient(circle, rgba(255, 255, 0, 0.8) 0%, transparent 70%);
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle, rgba(255, 235, 59, 0.8) 0%, transparent 70%);
             border-radius: 50%;
             pointer-events: none;
             z-index: 95;
@@ -215,170 +323,348 @@
         }
         
         @keyframes ripple {
-            0% {
-                transform: scale(0.5);
-                opacity: 1;
-            }
-            100% {
-                transform: scale(3);
-                opacity: 0;
-            }
+            0% { transform: scale(0.5); opacity: 1; }
+            100% { transform: scale(2.5); opacity: 0; }
         }
         
-        /* ВСПЛЫВАЮЩИЕ СООБЩЕНИЯ */
-        .message {
-            position: absolute;
-            color: yellow;
-            font-weight: bold;
-            font-size: 18px;
-            text-shadow: 2px 2px 0 #000;
-            z-index: 200;
-            animation: floatUp 1.2s forwards;
-            pointer-events: none;
-        }
-        
-        @keyframes floatUp {
-            0% {
-                transform: translateY(0) scale(0.8);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-60px) scale(1.2);
-                opacity: 0;
-            }
-        }
-        
-        /* КНОПКИ */
+        /* ПАНЕЛЬ УПРАВЛЕНИЯ */
         .controls {
-            background: #1b5e20;
-            padding: 10px;
-            border-radius: 10px;
-            margin: 10px auto;
-            width: 95%;
+            background: rgba(0, 100, 0, 0.8);
+            padding: 15px;
+            border-radius: 15px;
+            margin: 15px auto;
+            border: 3px solid #0d3b1c;
+        }
+        
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .main-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
         }
         
         button {
-            background: #ff9800;
+            background: linear-gradient(to bottom, #ff9800, #f57c00);
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 12px 20px;
             font-size: 16px;
-            border-radius: 20px;
-            margin: 5px;
+            border-radius: 25px;
             cursor: pointer;
             font-weight: bold;
-            min-width: 120px;
+            border: 3px solid #e65100;
             transition: all 0.2s;
+            min-width: 140px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
         
         button:hover {
-            background: #ff5722;
+            background: linear-gradient(to bottom, #ff5722, #e64a19);
             transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
         }
         
         button:active {
             transform: translateY(1px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
         
         button:disabled {
-            background: #795548;
+            background: linear-gradient(to bottom, #795548, #5d4037);
             cursor: not-allowed;
             transform: none !important;
         }
         
-        /* ПРИВЕТСТВИЕ ПРИ ЗАПУСКЕ */
-        .welcome-message {
+        .small-btn {
+            padding: 8px 15px;
+            font-size: 14px;
+            min-width: auto;
+        }
+        
+        /* МОДАЛЬНЫЕ ОКНА */
+        .modal {
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.8);
-            display: flex;
-            flex-direction: column;
+            z-index: 1000;
             justify-content: center;
             align-items: center;
-            z-index: 1000;
-            animation: fadeOut 2s 2s forwards;
         }
         
-        .welcome-text {
-            font-size: 28px;
-            color: #4caf50;
-            text-align: center;
+        .modal-content {
+            background: linear-gradient(135deg, #2e7d32, #1b5e20);
+            padding: 25px;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 5px solid #0d3b1c;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        
+        .modal h2 {
+            color: #ffeb3b;
             margin-bottom: 20px;
-            text-shadow: 0 0 10px #4caf50;
-            animation: pulse 1s infinite alternate;
+            text-align: center;
         }
         
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.1); }
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #f44336;
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            line-height: 30px;
         }
         
-        @keyframes fadeOut {
-            0% { opacity: 1; }
-            100% { opacity: 0; visibility: hidden; }
+        /* ДОСТИЖЕНИЯ */
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
         }
+        
+        .achievement {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid transparent;
+        }
+        
+        .achievement.unlocked {
+            border-color: #ffeb3b;
+            background: rgba(255, 235, 59, 0.1);
+        }
+        
+        .achievement-icon {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        
+        .achievement-name {
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 3px;
+        }
+        
+        .achievement-desc {
+            font-size: 10px;
+            color: #c8e6c9;
+        }
+        
+        /* ТАБЛИЦА ЛИДЕРОВ */
+        .leaderboard {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        
+        .leaderboard th {
+            background: #1b5e20;
+            padding: 10px;
+            color: #ffeb3b;
+        }
+        
+        .leaderboard td {
+            padding: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .leaderboard tr:nth-child(even) {
+            background: rgba(255,255,255,0.05);
+        }
+        
+        .leaderboard tr:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .rank-1 { color: #ffd700; font-weight: bold; }
+        .rank-2 { color: #c0c0c0; }
+        .rank-3 { color: #cd7f32; }
         
         /* АДАПТИВНОСТЬ */
         @media (max-width: 600px) {
+            .container {
+                padding: 5px;
+            }
+            
             .game-area {
                 height: 50vh;
             }
             
+            .controls-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .main-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
             button {
-                padding: 8px 16px;
-                font-size: 14px;
-                min-width: 100px;
+                width: 100%;
+                max-width: 250px;
+            }
+            
+            .stats-container {
+                grid-template-columns: 1fr;
+                gap: 5px;
             }
         }
+        
+        /* АНИМАЦИИ */
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .bounce { animation: bounce 0.5s ease infinite; }
+        .pulse { animation: pulse 1s ease-in-out infinite; }
     </style>
 </head>
 <body>
-    <!-- ПРИВЕТСТВЕННОЕ СООБЩЕНИЕ -->
-    <div class="welcome-message" id="welcomeMessage">
-        <div class="welcome-text">🐸 КВА-КВА! 🐸</div>
-        <div style="color: white; font-size: 18px; text-align: center;">
-            Добро пожаловать в игру!<br>
-            Лови мушек, нажимая на лягушку!
-        </div>
-    </div>
-    
-    <h1>🐸 Лягушка-Мухолов 🦟</h1>
-    
-    <div class="stats">
-        <div>Поймано: <span class="score" id="score">0</span></div>
-        <div>Рекорд: <span class="score" id="record">0</span></div>
-        <div>Мушки: <span class="score" id="flyCount">0</span></div>
-    </div>
-    
-    <div class="game-area" id="gameArea">
-        <div class="leaf"></div>
-        
-        <!-- ЛЯГУШКА С УЛУЧШЕННЫМ ЯЗЫКОМ -->
-        <div id="frog">
-            <div class="frog-body">
-                <div id="eye-left"><div id="pupil-left"></div></div>
-                <div id="eye-right"><div id="pupil-right"></div></div>
-                <div id="mouth"></div>
-                <div id="tongue">
-                    <div class="tongue-tip"></div>
+    <div class="container">
+        <!-- ШАПКА -->
+        <div class="header">
+            <h1>🐸 Лягушка-Мухолов PRO</h1>
+            <div class="stats-container">
+                <div class="stat-box">
+                    <div class="stat-label">Поймано</div>
+                    <div class="stat-value" id="score">0</div>
                 </div>
+                <div class="stat-box">
+                    <div class="stat-label">Рекорд</div>
+                    <div class="stat-value" id="record">0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Уровень</div>
+                    <div class="stat-value" id="level">1</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Опыт</div>
+                    <div class="stat-value" id="xp">0/100</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Монеты</div>
+                    <div class="stat-value">🪙 <span id="coins">0</span></div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Достижения</div>
+                    <div class="stat-value" id="achievements">0</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ИГРОВОЕ ПОЛЕ -->
+        <div class="game-area" id="gameArea">
+            <div class="leaf"></div>
+            
+            <!-- Лягушка -->
+            <div id="frog">
+                <div class="frog-body">
+                    <div class="eye eye-left"><div class="pupil"></div></div>
+                    <div class="eye eye-right"><div class="pupil"></div></div>
+                    <div class="mouth"></div>
+                    <div class="tongue" id="tongue">
+                        <div class="tongue-tip"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ПАНЕЛЬ УПРАВЛЕНИЯ -->
+        <div class="controls">
+            <div class="controls-grid">
+                <button id="startBtn" class="pulse">▶️ НАЧАТЬ ИГРУ</button>
+                <button id="pauseBtn">⏸️ ПАУЗА</button>
+                <button id="addFliesBtn">🦟 +5 МУШЕК</button>
+                <button id="upgradeBtn">⚡ УЛУЧШЕНИЯ</button>
+            </div>
+            
+            <div class="main-buttons">
+                <button id="statsBtn" class="small-btn">📊 СТАТИСТИКА</button>
+                <button id="leaderboardBtn" class="small-btn">🏆 ЛИДЕРЫ</button>
+                <button id="achievementsBtn" class="small-btn">🏅 ДОСТИЖЕНИЯ</button>
+                <button id="shopBtn" class="small-btn">🛒 МАГАЗИН</button>
             </div>
         </div>
     </div>
     
-    <div class="controls">
-        <button id="startBtn">▶️ НАЧАТЬ</button>
-        <button id="addBtn">🦟 +3</button>
-        <button id="resetBtn">🔄 СБРОС</button>
-        <button id="soundBtn">🔊 Вкл звук</button>
-        <p style="margin-top: 10px; color: #c8e6c9; font-size: 14px;">
-            Нажми на лягушку, чтобы поймать мушку!
-        </p>
+    <!-- МОДАЛЬНЫЕ ОКНА -->
+    
+    <!-- СТАТИСТИКА -->
+    <div id="statsModal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal('statsModal')">×</button>
+            <h2>📊 ВАША СТАТИСТИКА</h2>
+            <div id="statsList"></div>
+        </div>
     </div>
-
+    
+    <!-- ТАБЛИЦА ЛИДЕРОВ -->
+    <div id="leaderboardModal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal('leaderboardModal')">×</button>
+            <h2>🏆 ТАБЛИЦА ЛИДЕРОВ</h2>
+            <div id="leaderboardList"></div>
+        </div>
+    </div>
+    
+    <!-- ДОСТИЖЕНИЯ -->
+    <div id="achievementsModal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal('achievementsModal')">×</button>
+            <h2>🏅 ДОСТИЖЕНИЯ</h2>
+            <div class="achievements-grid" id="achievementsList"></div>
+        </div>
+    </div>
+    
+    <!-- МАГАЗИН -->
+    <div id="shopModal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal('shopModal')">×</button>
+            <h2>🛒 МАГАЗИН</h2>
+            <div id="shopItems"></div>
+            <p style="text-align: center; margin-top: 20px;">
+                Ваши монеты: 🪙 <span id="shopCoins">0</span>
+            </p>
+        </div>
+    </div>
+    
+    <!-- УЛУЧШЕНИЯ -->
+    <div id="upgradeModal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal('upgradeModal')">×</button>
+            <h2>⚡ УЛУЧШЕНИЯ</h2>
+            <div id="upgradesList"></div>
+        </div>
+    </div>
+    
     <!-- ЗВУКИ -->
     <audio id="startSound" preload="auto">
         <source src="https://assets.mixkit.co/sfx/preview/mixkit-frog-croak-760.mp3" type="audio/mpeg">
@@ -391,14 +677,39 @@
     <audio id="tongueSound" preload="auto">
         <source src="https://assets.mixkit.co/sfx/preview/mixkit-whip-swoosh-1100.mp3" type="audio/mpeg">
     </audio>
+    
+    <audio id="levelUpSound" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="coinSound" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-coins-handling-1939.mp3" type="audio/mpeg">
+    </audio>
 
     <script>
-        // ========== ПЕРЕМЕННЫЕ ==========
-        let score = 0;
-        let record = localStorage.getItem('frogRecord') || 0;
+        // ========== ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ==========
+        let gameData = {
+            score: 0,
+            record: localStorage.getItem('frogRecord') || 0,
+            level: 1,
+            xp: 0,
+            xpNeeded: 100,
+            coins: parseInt(localStorage.getItem('frogCoins')) || 0,
+            totalCaught: parseInt(localStorage.getItem('totalCaught')) || 0,
+            gamesPlayed: parseInt(localStorage.getItem('gamesPlayed')) || 0,
+            achievements: JSON.parse(localStorage.getItem('frogAchievements')) || {}
+        };
+        
         let gameActive = false;
+        let gamePaused = false;
         let flies = [];
         let soundEnabled = true;
+        let upgrades = {
+            tongueLength: 1,
+            tongueSpeed: 1,
+            catchRadius: 1,
+            coinMultiplier: 1
+        };
         
         // ========== ЭЛЕМЕНТЫ ==========
         const gameArea = document.getElementById('gameArea');
@@ -406,46 +717,87 @@
         const tongue = document.getElementById('tongue');
         const scoreElement = document.getElementById('score');
         const recordElement = document.getElementById('record');
-        const flyCountElement = document.getElementById('flyCount');
-        const startBtn = document.getElementById('startBtn');
-        const addBtn = document.getElementById('addBtn');
-        const resetBtn = document.getElementById('resetBtn');
-        const soundBtn = document.getElementById('soundBtn');
-        const welcomeMessage = document.getElementById('welcomeMessage');
+        const levelElement = document.getElementById('level');
+        const xpElement = document.getElementById('xp');
+        const coinsElement = document.getElementById('coins');
+        const achievementsElement = document.getElementById('achievements');
         
-        // ========== ЗВУКИ ==========
+        // Кнопки
+        const startBtn = document.getElementById('startBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const addFliesBtn = document.getElementById('addFliesBtn');
+        const upgradeBtn = document.getElementById('upgradeBtn');
+        const statsBtn = document.getElementById('statsBtn');
+        const leaderboardBtn = document.getElementById('leaderboardBtn');
+        const achievementsBtn = document.getElementById('achievementsBtn');
+        const shopBtn = document.getElementById('shopBtn');
+        
+        // Звуки
         const startSound = document.getElementById('startSound');
         const catchSound = document.getElementById('catchSound');
         const tongueSound = document.getElementById('tongueSound');
+        const levelUpSound = document.getElementById('levelUpSound');
+        const coinSound = document.getElementById('coinSound');
         
         // ========== ИНИЦИАЛИЗАЦИЯ ==========
-        recordElement.textContent = record;
+        function initGame() {
+            updateDisplay();
+            loadAchievements();
+            playSound(startSound);
+            
+            // Показываем приветствие
+            setTimeout(() => {
+                showMessage('Добро пожаловать!', gameArea.offsetWidth/2 - 80, 50);
+            }, 1000);
+        }
         
-        // Проиграть звук приветствия при запуске
-        setTimeout(() => {
-            if (soundEnabled) {
-                startSound.currentTime = 0;
-                startSound.play().catch(e => console.log("Звук не воспроизведен"));
-            }
-        }, 500);
+        function updateDisplay() {
+            scoreElement.textContent = gameData.score;
+            recordElement.textContent = gameData.record;
+            levelElement.textContent = gameData.level;
+            xpElement.textContent = `${gameData.xp}/${gameData.xpNeeded}`;
+            coinsElement.textContent = gameData.coins;
+            
+            // Считаем разблокированные достижения
+            const unlocked = Object.values(gameData.achievements).filter(a => a.unlocked).length;
+            achievementsElement.textContent = unlocked;
+        }
         
         // ========== СИСТЕМА МУШЕК ==========
-        function createFly() {
+        function createFly(type = 'normal') {
+            if (!gameActive || gamePaused) return;
+            
             const fly = document.createElement('div');
-            fly.className = 'fly';
+            let className, points, coinChance;
+            
+            switch(type) {
+                case 'fast':
+                    className = 'fly fly-fast';
+                    points = 2;
+                    coinChance = 0.3;
+                    break;
+                case 'fat':
+                    className = 'fly fly-fat';
+                    points = 3;
+                    coinChance = 0.5;
+                    break;
+                default:
+                    className = 'fly fly-normal';
+                    points = 1;
+                    coinChance = 0.1;
+            }
+            
+            fly.className = className;
+            fly.dataset.points = points;
+            fly.dataset.coinChance = coinChance;
+            fly.dataset.type = type;
             
             // Позиция
-            const x = Math.random() * (gameArea.offsetWidth - 40);
-            const y = Math.random() * (gameArea.offsetHeight - 120);
+            const x = 30 + Math.random() * (gameArea.offsetWidth - 60);
+            const y = 30 + Math.random() * (gameArea.offsetHeight - 120);
             
             fly.style.left = x + 'px';
             fly.style.top = y + 'px';
-            
-            // Движение
-            let angle = Math.random() * Math.PI * 2;
-            let speed = 1 + Math.random() * 2;
-            let dx = Math.cos(angle) * speed;
-            let dy = Math.sin(angle) * speed;
             
             gameArea.appendChild(fly);
             
@@ -453,69 +805,542 @@
                 element: fly,
                 x: x,
                 y: y,
-                dx: dx,
-                dy: dy,
-                caught: false
+                type: type,
+                points: points,
+                coinChance: coinChance
             };
             
             flies.push(flyData);
-            updateFlyCount();
-            
-            // Движение мушки
-            function moveFly() {
-                if (!flyData.caught && fly.parentNode) {
-                    flyData.x += flyData.dx;
-                    flyData.y += flyData.dy;
-                    
-                    // Отскок от границ
-                    if (flyData.x <= 0 || flyData.x >= gameArea.offsetWidth - 20) {
-                        flyData.dx *= -1;
-                    }
-                    if (flyData.y <= 0 || flyData.y >= gameArea.offsetHeight - 20) {
-                        flyData.dy *= -1;
-                    }
-                    
-                    fly.style.left = flyData.x + 'px';
-                    fly.style.top = flyData.y + 'px';
-                    
-                    requestAnimationFrame(moveFly);
-                }
-            }
-            
-            moveFly();
             
             // Автоудаление
             setTimeout(() => {
                 if (fly.parentNode && !flyData.caught) {
                     fly.remove();
                     flies = flies.filter(f => f !== flyData);
-                    updateFlyCount();
                 }
-            }, 10000);
+            }, 15000);
             
             return flyData;
         }
         
-        function updateFlyCount() {
-            flyCountElement.textContent = flies.length;
-        }
-        
-        // ========== АНИМАЦИИ И ЭФФЕКТЫ ==========
-        function createHitEffect(x, y) {
-            const effect = document.createElement('div');
-            effect.className = 'hit-effect';
-            effect.style.left = (x - 20) + 'px';
-            effect.style.top = (y - 20) + 'px';
-            gameArea.appendChild(effect);
+        // ========== ЛОВЛЯ МУШЕК ==========
+        function catchFlies() {
+            if (!gameActive || gamePaused) return;
             
-            setTimeout(() => {
-                if (effect.parentNode) {
-                    effect.remove();
+            // Анимация языка
+            const tongueLength = 100 + (upgrades.tongueLength * 20);
+            tongue.style.height = tongueLength + 'px';
+            playSound(tongueSound);
+            
+            // Проверка попадания
+            const frogRect = frog.getBoundingClientRect();
+            const gameRect = gameArea.getBoundingClientRect();
+            const frogCenterX = frogRect.left + frogRect.width / 2;
+            const frogCenterY = frogRect.top + frogRect.height / 2;
+            
+            const catchRadius = 100 + (upgrades.catchRadius * 20);
+            let caughtCount = 0;
+            let pointsEarned = 0;
+            let coinsEarned = 0;
+            
+            flies.forEach(flyData => {
+                if (flyData.caught) return;
+                
+                const flyRect = flyData.element.getBoundingClientRect();
+                const flyCenterX = flyRect.left + flyRect.width / 2;
+                const flyCenterY = flyRect.top + flyRect.height / 2;
+                
+                const distance = Math.sqrt(
+                    Math.pow(flyCenterX - frogCenterX, 2) +
+                    Math.pow(flyCenterY - frogCenterY, 2)
+                );
+                
+                if (distance < catchRadius) {
+                    caughtCount++;
+                    flyData.caught = true;
+                    
+                    // Очки
+                    pointsEarned += flyData.points;
+                    
+                    // Монеты
+                    if (Math.random() < flyData.coinChance) {
+                        coinsEarned++;
+                    }
+                    
+                    // Анимация поедания
+                    flyData.element.classList.add('eaten');
+                    createHitEffect(
+                        flyRect.left - gameRect.left + 10,
+                        flyRect.top - gameRect.top + 10
+                    );
+                    
+                    // Сообщение
+                    showMessage(
+                        `+${flyData.points}`,
+                        flyRect.left - gameRect.left,
+                        flyRect.top - gameRect.top
+                    );
+                    
+                    // Звук
+                    playSound(catchSound);
+                    
+                    // Удаление
+                    setTimeout(() => {
+                        if (flyData.element.parentNode) {
+                            flyData.element.remove();
+                            flies = flies.filter(f => f !== flyData);
+                        }
+                    }, 600);
                 }
-            }, 600);
+            });
+            
+            // Обновление данных
+            if (caughtCount > 0) {
+                // Очки
+                gameData.score += pointsEarned;
+                gameData.totalCaught += caughtCount;
+                
+                // Монеты
+                coinsEarned *= upgrades.coinMultiplier;
+                gameData.coins += coinsEarned;
+                if (coinsEarned > 0) {
+                    playSound(coinSound);
+                    showMessage(`🪙 +${coinsEarned}`, frogRect.left - gameRect.left + 70, frogRect.top - gameRect.top - 30);
+                }
+                
+                // Опыт
+                gameData.xp += pointsEarned * 2;
+                
+                // Проверка уровня
+                checkLevelUp();
+                
+                // Проверка достижений
+                checkAchievements();
+                
+                // Рекорд
+                if (gameData.score > gameData.record) {
+                    gameData.record = gameData.score;
+                    localStorage.setItem('frogRecord', gameData.record);
+                }
+                
+                // Сохранение
+                saveGameData();
+                updateDisplay();
+            }
+            
+            // Убрать язык
+            setTimeout(() => {
+                tongue.style.height = '0';
+            }, 400);
         }
         
-        function createMessage(text, x, y) {
+        // ========== СИСТЕМА УРОВНЕЙ ==========
+        function checkLevelUp() {
+            if (gameData.xp >= gameData.xpNeeded) {
+                gameData.level++;
+                gameData.xp -= gameData.xpNeeded;
+                gameData.xpNeeded = Math.floor(gameData.xpNeeded * 1.5);
+                
+                playSound(levelUpSound);
+                showMessage(`Уровень ${gameData.level}! 🎉`, gameArea.offsetWidth/2 - 60, 100);
+                
+                // Награда за уровень
+                gameData.coins += gameData.level * 10;
+                showMessage(`+${gameData.level * 10} монет!`, gameArea.offsetWidth/2 - 60, 150);
+                
+                saveGameData();
+                updateDisplay();
+            }
+        }
+        
+        // ========== ДОСТИЖЕНИЯ ==========
+        const achievementsList = [
+            { id: 'first_catch', name: 'Первая мушка', desc: 'Поймать первую мушку', icon: '🦟', reward: 10 },
+            { id: 'catch_10', name: 'Начинающий', desc: 'Поймать 10 мушек', icon: '🎯', reward: 25 },
+            { id: 'catch_50', name: 'Опытный', desc: 'Поймать 50 мушек', icon: '🏹', reward: 50 },
+            { id: 'catch_100', name: 'Мастер', desc: 'Поймать 100 мушек', icon: '👑', reward: 100 },
+            { id: 'score_50', name: 'Полсотни', desc: 'Набрать 50 очков за игру', icon: '5️⃣0️⃣', reward: 30 },
+            { id: 'score_100', name: 'Сотня', desc: 'Набрать 100 очков за игру', icon: '1️⃣0️⃣0️⃣', reward: 60 },
+            { id: 'level_5', name: 'Новичок', desc: 'Достичь 5 уровня', icon: '⭐', reward: 50 },
+            { id: 'level_10', name: 'Профи', desc: 'Достичь 10 уровня', icon: '🌟🌟', reward: 100 },
+            { id: 'coins_100', name: 'Богач', desc: 'Заработать 100 монет', icon: '💰', reward: 20 },
+            { id: 'coins_500', name: 'Миллионер', desc: 'Заработать 500 монет', icon: '💎', reward: 50 },
+            { id: 'fast_catch', name: 'Скорость', desc: 'Поймать 5 быстрых мушек', icon: '⚡', reward: 40 },
+            { id: 'fat_catch', name: 'Обжора', desc: 'Поймать 10 жирных мушек', icon: '🍔', reward: 60 }
+        ];
+        
+        function loadAchievements() {
+            achievementsList.forEach(ach => {
+                if (!gameData.achievements[ach.id]) {
+                    gameData.achievements[ach.id] = {
+                        unlocked: false,
+                        progress: 0,
+                        target: ach.id.includes('catch') ? 
+                            (ach.id.includes('_10') ? 10 : 
+                             ach.id.includes('_50') ? 50 : 
+                             ach.id.includes('_100') ? 100 : 1) :
+                            ach.id.includes('score') ? 
+                                (ach.id.includes('_50') ? 50 : 100) :
+                            ach.id.includes('level') ? 
+                                (ach.id.includes('_5') ? 5 : 10) :
+                            ach.id.includes('coins') ? 
+                                (ach.id.includes('_100') ? 100 : 500) :
+                            ach.id.includes('fast') ? 5 :
+                            ach.id.includes('fat') ? 10 : 1
+                    };
+                }
+            });
+            saveGameData();
+        }
+        
+        function checkAchievements() {
+            let newAchievements = [];
+            
+            achievementsList.forEach(ach => {
+                const achievement = gameData.achievements[ach.id];
+                
+                if (!achievement.unlocked) {
+                    // Обновляем прогресс
+                    if (ach.id.includes('catch')) {
+                        achievement.progress = gameData.totalCaught;
+                    } else if (ach.id.includes('score')) {
+                        if (gameData.score >= achievement.target) {
+                            achievement.progress = achievement.target;
+                        }
+                    } else if (ach.id.includes('level')) {
+                        achievement.progress = gameData.level;
+                    } else if (ach.id.includes('coins')) {
+                        achievement.progress = gameData.coins;
+                    }
+                    
+                    // Проверяем выполнение
+                    if (achievement.progress >= achievement.target) {
+                        achievement.unlocked = true;
+                        gameData.coins += ach.reward;
+                        newAchievements.push(ach);
+                    }
+                }
+            });
+            
+            // Показываем новые достижения
+            if (newAchievements.length > 0) {
+                showAchievementUnlocked(newAchievements[0]);
+                saveGameData();
+                updateDisplay();
+            }
+        }
+        
+        function showAchievementUnlocked(achievement) {
+            const msg = document.createElement('div');
+            msg.className = 'message';
+            msg.style.cssText = `
+                left: ${gameArea.offsetWidth/2 - 100}px;
+                top: ${gameArea.offsetHeight/2}px;
+                font-size: 20px;
+                color: #ffeb3b;
+                text-align: center;
+                width: 200px;
+            `;
+            msg.innerHTML = `
+                <div style="font-size: 32px;">${achievement.icon}</div>
+                <div style="font-weight: bold;">${achievement.name}</div>
+                <div style="font-size: 14px;">+${achievement.reward} монет</div>
+            `;
+            gameArea.appendChild(msg);
+            
+            setTimeout(() => msg.remove(), 3000);
+            playSound(coinSound);
+        }
+        
+        // ========== ИГРОВЫЕ ФУНКЦИИ ==========
+        function startGame() {
+            if (gameActive) return;
+            
+            gameActive = true;
+            gamePaused = false;
+            gameData.score = 0;
+            gameData.gamesPlayed++;
+            
+            // Очистка
+            flies.forEach(f => f.element.remove());
+            flies = [];
+            
+            // Создание мушек
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => createFly(), i * 500);
+                setTimeout(() => createFly('fast'), i * 700 + 250);
+                if (gameData.level >= 3) {
+                    setTimeout(() => createFly('fat'), i * 1000 + 500);
+                }
+            }
+            
+            // Обновление интерфейса
+            startBtn.disabled = true;
+            startBtn.textContent = '🎮 ИГРА ИДЕТ...';
+            pauseBtn.disabled = false;
+            
+            // Сообщение
+            showMessage('Игра началась!', gameArea.offsetWidth/2 - 60, 50);
+            playSound(startSound);
+            
+            saveGameData();
+            updateDisplay();
+        }
+        
+        function pauseGame() {
+            gamePaused = !gamePaused;
+            pauseBtn.textContent = gamePaused ? '▶️ ПРОДОЛЖИТЬ' : '⏸️ ПАУЗА';
+            
+            if (gamePaused) {
+                showMessage('ПАУЗА', gameArea.offsetWidth/2 - 30, 100);
+            }
+        }
+        
+        function addFlies() {
+            if (!gameActive || gamePaused) return;
+            
+            for (let i = 0; i < 5; i++) {
+                const types = ['normal', 'fast'];
+                if (gameData.level >= 2) types.push('fat');
+                const type = types[Math.floor(Math.random() * types.length)];
+                setTimeout(() => createFly(type), i * 200);
+            }
+            
+            showMessage('+5 мушек!', gameArea.offsetWidth/2 - 50, 50);
+        }
+        
+        // ========== УПРАВЛЕНИЕ ==========
+        frog.addEventListener('click', catchFlies);
+        
+        startBtn.addEventListener('click', startGame);
+        pauseBtn.addEventListener('click', pauseGame);
+        addFliesBtn.addEventListener('click', addFlies);
+        upgradeBtn.addEventListener('click', () => openModal('upgradeModal'));
+        statsBtn.addEventListener('click', () => openModal('statsModal'));
+        leaderboardBtn.addEventListener('click', () => openModal('leaderboardModal'));
+        achievementsBtn.addEventListener('click', () => openModal('achievementsModal'));
+        shopBtn.addEventListener('click', () => openModal('shopModal'));
+        
+        // ========== МОДАЛЬНЫЕ ОКНА ==========
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex';
+            
+            // Заполняем данные
+            switch(modalId) {
+                case 'statsModal':
+                    showStats();
+                    break;
+                case 'leaderboardModal':
+                    showLeaderboard();
+                    break;
+                case 'achievementsModal':
+                    showAchievements();
+                    break;
+                case 'shopModal':
+                    showShop();
+                    break;
+                case 'upgradeModal':
+                    showUpgrades();
+                    break;
+            }
+        }
+        
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+        
+        function showStats() {
+            const statsList = document.getElementById('statsList');
+            statsList.innerHTML = `
+                <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px; margin: 10px 0;">
+                    <div style="display: flex; justify-content: space-between; margin: 5px 0;">
+                        <span>Всего игр:</span>
+                        <span style="color: #ffeb3b;">${gameData.gamesPlayed}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin: 5px 0;">
+                        <span>Всего поймано:</span>
+                        <span style="color: #ffeb3b;">${gameData.totalCaught}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin: 5px 0;">
+                        <span>Текущий рекорд:</span>
+                        <span style="color: #ffeb3b;">${gameData.record}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin: 5px 0;">
+                        <span>Уровень:</span>
+                        <span style="color: #ffeb3b;">${gameData.level}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin: 5px 0;">
+                        <span>Опыт:</span>
+                        <span style="color: #ffeb3b;">${gameData.xp}/${gameData.xpNeeded}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin: 5px 0;">
+                        <span>Монеты:</span>
+                        <span style="color: #ffeb3b;">🪙 ${gameData.coins}</span>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function showLeaderboard() {
+            // Здесь можно добавить реальный лидерборд через бэкенд
+            // Покажем локальный лидерборд
+            const leaderboardList = document.getElementById('leaderboardList');
+            leaderboardList.innerHTML = `
+                <table class="leaderboard">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Игрок</th>
+                            <th>Рекорд</th>
+                            <th>Уровень</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="rank-1">1</td>
+                            <td>Вы</td>
+                            <td>${gameData.record}</td>
+                            <td>${gameData.level}</td>
+                        </tr>
+                        <tr>
+                            <td class="rank-2">2</td>
+                            <td>Игрок 2</td>
+                            <td>${Math.floor(gameData.record * 0.8)}</td>
+                            <td>${Math.floor(gameData.level * 0.9)}</td>
+                        </tr>
+                        <tr>
+                            <td class="rank-3">3</td>
+                            <td>Игрок 3</td>
+                            <td>${Math.floor(gameData.record * 0.6)}</td>
+                            <td>${Math.floor(gameData.level * 0.8)}</td>
+                        </tr>
+                        <!-- Добавьте больше игроков по желанию -->
+                    </tbody>
+                </table>
+                <p style="text-align: center; margin-top: 15px; color: #c8e6c9;">
+                    🏆 Будьте первым в рейтинге!
+                </p>
+            `;
+        }
+        
+        function showAchievements() {
+            const achievementsList = document.getElementById('achievementsList');
+            achievementsList.innerHTML = '';
+            
+            achievementsList.forEach(ach => {
+                const achievement = gameData.achievements[ach.id];
+                const div = document.createElement('div');
+                div.className = `achievement ${achievement.unlocked ? 'unlocked' : ''}`;
+                div.innerHTML = `
+                    <div class="achievement-icon">${ach.icon}</div>
+                    <div class="achievement-name">${ach.name}</div>
+                    <div class="achievement-desc">${ach.desc}</div>
+                    <div style="font-size: 10px; margin-top: 5px; color: ${achievement.unlocked ? '#ffeb3b' : '#c8e6c9'}">
+                        ${achievement.unlocked ? '✅ Разблокировано' : 
+                         `${achievement.progress}/${achievement.target}`}
+                    </div>
+                    ${achievement.unlocked ? `<div style="font-size: 9px; color: #ffeb3b;">+${ach.reward} монет</div>` : ''}
+                `;
+                achievementsList.appendChild(div);
+            });
+        }
+        
+        function showShop() {
+            const shopItems = document.getElementById('shopItems');
+            document.getElementById('shopCoins').textContent = gameData.coins;
+            
+            const items = [
+                { id: 'skin1', name: 'Золотая лягушка', desc: 'Особая расцветка', price: 100, icon: '🐸' },
+                { id: 'skin2', name: 'Розовая лягушка', desc: 'Яркая расцветка', price: 150, icon: '🐸' },
+                { id: 'bg1', name: 'Ночное болото', desc: 'Темный фон', price: 200, icon: '🌙' },
+                { id: 'bg2', name: 'Радужное болото', desc: 'Яркий фон', price: 250, icon: '🌈' },
+                { id: 'tongue1', name: 'Огненный язык', desc: 'Особый язык', price: 300, icon: '🔥' }
+            ];
+            
+            shopItems.innerHTML = items.map(item => `
+                <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px; margin: 10px 0; display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <div style="font-size: 24px;">${item.icon}</div>
+                        <div style="font-weight: bold;">${item.name}</div>
+                        <div style="font-size: 12px; color: #c8e6c9;">${item.desc}</div>
+                    </div>
+                    <div>
+                        <div style="color: #ffeb3b; font-size: 18px;">🪙 ${item.price}</div>
+                        <button onclick="buyItem('${item.id}', ${item.price})" 
+                                style="padding: 5px 10px; font-size: 12px; margin-top: 5px;"
+                                ${gameData.coins < item.price ? 'disabled' : ''}>
+                            Купить
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function showUpgrades() {
+            const upgradesList = document.getElementById('upgradesList');
+            const upgradeItems = [
+                { id: 'tongueLength', name: 'Длина языка', desc: 'Увеличивает дальность', price: 50 + (upgrades.tongueLength * 25), icon: '📏', level: upgrades.tongueLength },
+                { id: 'tongueSpeed', name: 'Скорость языка', desc: 'Быстрее ловит', price: 60 + (upgrades.tongueSpeed * 30), icon: '⚡', level: upgrades.tongueSpeed },
+                { id: 'catchRadius', name: 'Радиус ловли', desc: 'Больше площадь', price: 70 + (upgrades.catchRadius * 35), icon: '🎯', level: upgrades.catchRadius },
+                { id: 'coinMultiplier', name: 'Множитель монет', desc: 'Больше монет', price: 100 + (upgrades.coinMultiplier * 50), icon: '💰', level: upgrades.coinMultiplier }
+            ];
+            
+            upgradesList.innerHTML = upgradeItems.map(item => `
+                <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px; margin: 10px 0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div style="font-size: 24px;">${item.icon}</div>
+                            <div style="font-weight: bold;">${item.name} (ур. ${item.level})</div>
+                            <div style="font-size: 12px; color: #c8e6c9;">${item.desc}</div>
+                        </div>
+                        <div>
+                            <div style="color: #ffeb3b; font-size: 18px;">🪙 ${item.price}</div>
+                            <button onclick="buyUpgrade('${item.id}', ${item.price})" 
+                                    style="padding: 5px 10px; font-size: 12px; margin-top: 5px;"
+                                    ${gameData.coins < item.price ? 'disabled' : ''}>
+                                Улучшить
+                            </button>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; height: 5px; background: rgba(255,255,255,0.2); border-radius: 3px;">
+                        <div style="width: ${Math.min(item.level * 20, 100)}%; height: 100%; background: #4caf50; border-radius: 3px;"></div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // ========== ПОКУПКИ И УЛУЧШЕНИЯ ==========
+        window.buyItem = function(itemId, price) {
+            if (gameData.coins >= price) {
+                gameData.coins -= price;
+                showMessage(`Куплено!`, gameArea.offsetWidth/2 - 40, 100);
+                playSound(coinSound);
+                saveGameData();
+                updateDisplay();
+                showShop(); // Обновляем магазин
+            }
+        };
+        
+        window.buyUpgrade = function(upgradeId, price) {
+            if (gameData.coins >= price) {
+                gameData.coins -= price;
+                upgrades[upgradeId]++;
+                showMessage(`Улучшено!`, gameArea.offsetWidth/2 - 40, 100);
+                playSound(coinSound);
+                saveGameData();
+                updateDisplay();
+                showUpgrades(); // Обновляем список улучшений
+            }
+        };
+        
+        // ========== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ==========
+        function playSound(sound) {
+            if (!soundEnabled) return;
+            sound.currentTime = 0;
+            sound.play().catch(() => {});
+        }
+        
+        function showMessage(text, x, y) {
             const msg = document.createElement('div');
             msg.className = 'message';
             msg.textContent = text;
@@ -523,251 +1348,81 @@
             msg.style.top = y + 'px';
             gameArea.appendChild(msg);
             
-            setTimeout(() => {
-                if (msg.parentNode) {
-                    msg.remove();
-                }
-            }, 1200);
+            setTimeout(() => msg.remove(), 1500);
         }
         
-        // ========== ЛОВЛЯ МУШЕК С АНИМАЦИЕЙ ==========
-        function catchFlies() {
-            if (!gameActive) {
-                createMessage('Сначала начни игру!', 50, 50);
-                return;
-            }
+        function createHitEffect(x, y) {
+            const effect = document.createElement('div');
+            effect.className = 'hit-effect';
+            effect.style.left = (x - 20) + 'px';
+            effect.style.top = (y - 20) + 'px';
+            gameArea.appendChild(effect);
             
-            // Анимация выстрела языка (ДЛИННЕЕ!)
-            tongue.style.height = '120px'; // Увеличили длину языка
-            tongueSound.currentTime = 0;
-            if (soundEnabled) tongueSound.play().catch(() => {});
-            
-            // Анимация лягушки
-            frog.style.transform = 'scale(1.1)';
-            setTimeout(() => {
-                frog.style.transform = 'scale(1)';
-            }, 200);
-            
-            // Звук кваканья
-            startSound.currentTime = 0;
-            if (soundEnabled) startSound.play().catch(() => {});
-            
-            // Проверка попадания
-            const frogRect = frog.getBoundingClientRect();
-            const gameRect = gameArea.getBoundingClientRect();
-            const frogCenterX = frogRect.left + 70;
-            const frogCenterY = frogRect.top + 50;
-            
-            let caughtCount = 0;
-            
-            flies.forEach(flyData => {
-                if (flyData.caught) return;
-                
-                const flyRect = flyData.element.getBoundingClientRect();
-                const flyCenterX = flyRect.left + 10;
-                const flyCenterY = flyRect.top + 10;
-                
-                const distance = Math.sqrt(
-                    Math.pow(flyCenterX - frogCenterX, 2) +
-                    Math.pow(flyCenterY - frogCenterY, 2)
-                );
-                
-                // Радиус увеличен благодаря длинному языку
-                if (distance < 130) {
-                    caughtCount++;
-                    flyData.caught = true;
-                    
-                    // Анимация поедания
-                    flyData.element.classList.add('eaten');
-                    
-                    // Эффект попадания
-                    createHitEffect(
-                        flyRect.left - gameRect.left + 10,
-                        flyRect.top - gameRect.top + 10
-                    );
-                    
-                    // Звук поедания
-                    catchSound.currentTime = 0;
-                    if (soundEnabled) catchSound.play().catch(() => {});
-                    
-                    // Сообщение
-                    createMessage(
-                        '+1 🎯',
-                        flyRect.left - gameRect.left,
-                        flyRect.top - gameRect.top
-                    );
-                    
-                    // Удаление мушки
-                    setTimeout(() => {
-                        if (flyData.element.parentNode) {
-                            flyData.element.remove();
-                            flies = flies.filter(f => f !== flyData);
-                            updateFlyCount();
-                        }
-                    }, 600);
-                }
-            });
-            
-            // Обновление счета
-            if (caughtCount > 0) {
-                score += caughtCount;
-                scoreElement.textContent = score;
-                
-                // Рекорд
-                if (score > record) {
-                    record = score;
-                    recordElement.textContent = record;
-                    localStorage.setItem('frogRecord', record);
-                    
-                    if (score % 5 === 0) {
-                        createMessage(
-                            `Рекорд! ${score} 🏆`,
-                            frogRect.left - gameRect.left + 70,
-                            frogRect.top - gameRect.top - 30
-                        );
-                    }
-                }
-            } else if (flies.length > 0) {
-                createMessage(
-                    'Промах! 👎',
-                    frogRect.left - gameRect.left + 70,
-                    frogRect.top - gameRect.top - 30
-                );
-            }
-            
-            // Убрать язык
-            setTimeout(() => {
-                tongue.style.height = '0';
-            }, 400); // Увеличили время видимости языка
+            setTimeout(() => effect.remove(), 600);
         }
         
-        // ========== УПРАВЛЕНИЕ ИГРОЙ ==========
-        startBtn.onclick = function() {
-            if (gameActive) return;
-            
-            gameActive = true;
-            score = 0;
-            scoreElement.textContent = score;
-            
-            // Звук начала игры
-            startSound.currentTime = 0;
-            if (soundEnabled) startSound.play().catch(() => {});
-            
-            // Очистка старых мушек
-            flies.forEach(f => {
-                if (f.element.parentNode) {
-                    f.element.remove();
-                }
-            });
-            flies = [];
-            
-            // Создание начальных мушек
-            for (let i = 0; i < 5; i++) {
-                setTimeout(() => createFly(), i * 400);
-            }
-            
-            // Обновление кнопки
-            startBtn.disabled = true;
-            startBtn.textContent = '🎮 ИГРАЕТСЯ...';
-            
-            // Сообщение
-            createMessage('Игра началась!', gameArea.offsetWidth/2 - 60, 50);
-        };
-        
-        addBtn.onclick = function() {
-            if (!gameActive) {
-                createMessage('Сначала начни игру!', 50, 50);
-                return;
-            }
-            
-            for (let i = 0; i < 3; i++) {
-                setTimeout(() => createFly(), i * 300);
-            }
-            
-            createMessage('+3 мушки 🦟', gameArea.offsetWidth/2 - 40, 50);
-        };
-        
-        resetBtn.onclick = function() {
-            gameActive = false;
-            score = 0;
-            scoreElement.textContent = score;
-            
-            flies.forEach(f => {
-                if (f.element.parentNode) {
-                    f.element.remove();
-                }
-            });
-            flies = [];
-            updateFlyCount();
-            
-            startBtn.disabled = false;
-            startBtn.textContent = '▶️ НАЧАТЬ';
-        };
-        
-        // Управление звуком
-        soundBtn.onclick = function() {
-            soundEnabled = !soundEnabled;
-            soundBtn.textContent = soundEnabled ? '🔊 Вкл звук' : '🔇 Выкл звук';
-            
-            if (soundEnabled) {
-                // Проиграть тестовый звук
-                startSound.currentTime = 0;
-                startSound.play().catch(() => {});
-            }
-        };
-        
-        // ========== СОБЫТИЯ ==========
-        frog.onclick = catchFlies;
-        
-        // Демо-мушка при загрузке
-        setTimeout(() => {
-            if (!gameActive) {
-                createFly();
-                createMessage('Нажми "НАЧАТЬ"!', gameArea.offsetWidth/2 - 50, 50);
-            }
-        }, 1000);
-        
-        // Автоматическое добавление мушек
-        setInterval(() => {
-            if (gameActive && flies.length < 8 && Math.random() > 0.4) {
-                createFly();
-            }
-        }, 3000);
+        function saveGameData() {
+            localStorage.setItem('frogRecord', gameData.record);
+            localStorage.setItem('frogCoins', gameData.coins);
+            localStorage.setItem('totalCaught', gameData.totalCaught);
+            localStorage.setItem('gamesPlayed', gameData.gamesPlayed);
+            localStorage.setItem('frogAchievements', JSON.stringify(gameData.achievements));
+        }
         
         // ========== TELEGRAM ИНТЕГРАЦИЯ ==========
         if (typeof Telegram !== 'undefined' && Telegram.WebApp) {
             Telegram.WebApp.ready();
             Telegram.WebApp.expand();
             
-            // Кнопка "Играть снова" в Telegram
-            Telegram.WebApp.MainButton.setText('🔄 Играть снова');
+            // Основная кнопка
+            Telegram.WebApp.MainButton.setText('🔄 Новая игра');
             Telegram.WebApp.MainButton.onClick(() => {
-                resetBtn.click();
-                setTimeout(() => startBtn.click(), 300);
+                resetGame();
+                setTimeout(startGame, 500);
             });
             
-            // Показываем кнопку при хорошем результате
-            setInterval(() => {
-                if (score > 3 && gameActive && !Telegram.WebApp.MainButton.isVisible) {
-                    Telegram.WebApp.MainButton.show();
+            // Кнопка настроек
+            Telegram.WebApp.SettingsButton.setText('⚙️ Настройки');
+            Telegram.WebApp.SettingsButton.onClick(() => {
+                alert('Настройки игры:\n\n• Звуки: Вкл/Выкл\n• Сложность: Нормальная\n• Управление: Касание');
+            });
+            Telegram.WebApp.SettingsButton.show();
+            
+            // Отправка данных о рекорде
+            function sendScoreToBot() {
+                if (Telegram.WebApp.initDataUnsafe.user) {
+                    const userId = Telegram.WebApp.initDataUnsafe.user.id;
+                    const score = gameData.record;
+                    
+                    // Здесь можно отправить данные на ваш сервер
+                    console.log(`Игрок ${userId} установил рекорд: ${score}`);
                 }
-            }, 2000);
+            }
+            
+            // Отправляем рекорд при закрытии
+            Telegram.WebApp.onEvent('viewportChanged', sendScoreToBot);
         }
         
-        // ========== ИНИЦИАЛИЗАЦИЯ ЗВУКОВ ==========
-        // Предзагрузка звуков
-        window.addEventListener('touchstart', function() {
-            // Это нужно для авто-воспроизведения на мобильных
-            startSound.volume = 0;
-            startSound.play().then(() => {
-                startSound.pause();
-                startSound.currentTime = 0;
-                startSound.volume = 1;
-            }).catch(() => {});
-        }, { once: true });
+        // ========== АВТОМАТИЧЕСКИЕ ДЕЙСТВИЯ ==========
+        setInterval(() => {
+            if (gameActive && !gamePaused && flies.length < 8 + gameData.level) {
+                const types = ['normal', 'fast'];
+                if (gameData.level >= 3) types.push('fat');
+                const type = types[Math.floor(Math.random() * types.length)];
+                createFly(type);
+            }
+        }, 2000);
         
-        console.log('🐸 Игра "Лягушка-Мухолов" улучшена!');
-        console.log('🎯 Теперь с анимациями и звуками!');
+        // ========== ЗАПУСК ==========
+        initGame();
+        
+        // Автозапуск демо
+        setTimeout(() => {
+            if (!gameActive) {
+                createFly();
+                showMessage('Нажми "НАЧАТЬ ИГРУ"!', gameArea.offsetWidth/2 - 70, 50);
+            }
+        }, 1500);
     </script>
 </body>
 </html>
