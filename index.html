@@ -2,178 +2,139 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>🐸 Лягушка-Мухолов</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐸 Лягушка ловит мух</title>
     <style>
-        /* БАЗОВЫЕ СТИЛИ ДЛЯ МОБИЛЬНЫХ */
+        /* ОСНОВНЫЕ СТИЛИ */
         * {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
         }
         
         body {
-            background: linear-gradient(135deg, #1b5e20, #2e7d32);
+            background: #2e7d32;
             color: white;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: Arial, sans-serif;
             text-align: center;
-            min-height: 100vh;
-            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
-            overflow-x: hidden;
-        }
-        
-        .container {
-            max-width: 100%;
             padding: 10px;
-            display: flex;
-            flex-direction: column;
-            height: calc(100vh - 20px);
-        }
-        
-        /* ШАПКА - КОМПАКТНАЯ */
-        .header {
-            background: rgba(0, 100, 0, 0.9);
-            padding: 12px 10px;
-            border-radius: 15px;
-            margin-bottom: 10px;
-            border: 3px solid #0d3b1c;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            min-height: 100vh;
         }
         
         h1 {
-            color: #ffeb3b;
-            margin-bottom: 8px;
-            font-size: 20px;
-            text-shadow: 2px 2px 0 #000;
+            color: yellow;
+            margin: 10px 0;
+            font-size: 22px;
         }
         
-        /* СТАТИСТИКА - ГОРИЗОНТАЛЬНАЯ */
-        .stats-row {
-            display: flex;
-            justify-content: space-between;
-            gap: 5px;
-        }
-        
-        .stat-box {
-            flex: 1;
-            background: rgba(0, 80, 0, 0.8);
-            padding: 8px 5px;
-            border-radius: 8px;
-            border: 2px solid #1b5e20;
-            min-width: 0;
-            overflow: hidden;
-        }
-        
-        .stat-label {
-            font-size: 10px;
-            color: #c8e6c9;
-            margin-bottom: 3px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        
-        .stat-value {
-            font-size: 16px;
-            color: #ffeb3b;
-            font-weight: bold;
-            white-space: nowrap;
-        }
-        
-        /* ИГРОВОЕ ПОЛЕ - БОЛЬШЕ МЕСТА */
-        .game-area {
-            background: linear-gradient(to bottom, #4caf50, #388e3c);
-            border: 4px solid #1b5e20;
-            border-radius: 15px;
-            flex: 1;
-            min-height: 300px;
-            position: relative;
-            margin: 8px 0;
-            overflow: hidden;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.3);
-        }
-        
-        /* ЛЯГУШКА - АДАПТИВНАЯ */
-        #frog {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 120px;
-            height: 90px;
-            cursor: pointer;
-            z-index: 100;
-            touch-action: manipulation;
-        }
-        
-        .frog-body {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(145deg, #4caf50, #66bb6a);
-            border-radius: 60px 60px 40px 40px;
-            border: 4px solid #2e7d32;
-            position: relative;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
-        }
-        
-        /* Глаза */
-        .eye {
-            position: absolute;
-            top: 15px;
-            width: 25px;
-            height: 25px;
-            background: white;
-            border-radius: 50%;
-            border: 2px solid #1b5e20;
-        }
-        
-        .eye-left { left: 20px; }
-        .eye-right { right: 20px; }
-        
-        .pupil {
-            width: 12px;
-            height: 12px;
+        .stats {
             background: #1b5e20;
-            border-radius: 50%;
-            margin: 5px auto 0;
+            padding: 10px;
+            border-radius: 10px;
+            margin: 10px auto;
+            width: 95%;
+            display: flex;
+            justify-content: space-around;
+            font-weight: bold;
         }
         
-        /* Рот */
-        .mouth {
+        .score {
+            color: yellow;
+            font-size: 20px;
+        }
+        
+        /* ИГРОВОЕ ПОЛЕ */
+        .game-area {
+            background: #4caf50;
+            border: 5px solid #1b5e20;
+            border-radius: 15px;
+            height: 60vh;
+            max-height: 400px;
+            position: relative;
+            margin: 10px auto;
+            overflow: hidden;
+        }
+        
+        /* ЛЯГУШКА */
+        #frog {
             position: absolute;
             bottom: 20px;
             left: 50%;
-            transform: translateX(-50%);
-            width: 35px;
-            height: 15px;
-            background: #333;
-            border-radius: 0 0 17px 17px;
+            margin-left: -70px;
+            width: 140px;
+            height: 100px;
+            cursor: pointer;
+            z-index: 100;
         }
         
-        /* Язык */
-        .tongue {
+        .frog-body {
+            width: 140px;
+            height: 100px;
+            background: #4caf50;
+            border-radius: 70px 70px 60px 60px;
+            border: 4px solid #2e7d32;
+            position: relative;
+        }
+        
+        /* Глаза */
+        #eye-left, #eye-right {
             position: absolute;
-            bottom: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 6px;
+            top: 15px;
+            width: 30px;
+            height: 30px;
+            background: white;
+            border: 3px solid black;
+            border-radius: 15px;
+        }
+        
+        #eye-left { left: 25px; }
+        #eye-right { right: 25px; }
+        
+        /* Зрачки */
+        #pupil-left, #pupil-right {
+            width: 15px;
+            height: 15px;
+            background: black;
+            border-radius: 8px;
+            margin: 6px auto 0;
+        }
+        
+        /* Рот */
+        #mouth {
+            position: absolute;
+            bottom: 25px;
+            left: 50px;
+            width: 40px;
+            height: 15px;
+            background: #333;
+            border-radius: 0 0 20px 20px;
+        }
+        
+        /* ЯЗЫК - СДЕЛАЕМ ДЛИННЕЕ И С ЭФФЕКТОМ */
+        #tongue {
+            position: absolute;
+            bottom: 20px;
+            left: 67px;
+            width: 8px; /* Немного шире */
             height: 0;
-            background: #ff5252;
-            border-radius: 3px;
-            transition: height 0.3s;
+            background: linear-gradient(to top, #ff4444, #ff8888); /* Градиент */
+            border-radius: 4px;
+            transform-origin: bottom center;
+            transition: height 0.2s ease-out;
+            box-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
             z-index: 90;
         }
         
+        /* Кончик языка */
         .tongue-tip {
             position: absolute;
-            bottom: -8px;
+            bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 12px;
-            height: 12px;
-            background: #ff5252;
+            width: 16px;
+            height: 16px;
+            background: #ff4444;
             clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            border-radius: 0 0 8px 8px;
         }
         
         /* Лист */
@@ -181,409 +142,263 @@
             position: absolute;
             bottom: 0;
             left: 50%;
-            transform: translateX(-50%);
-            width: 160px;
-            height: 50px;
+            margin-left: -90px;
+            width: 180px;
+            height: 60px;
             background: #7cb342;
-            border-radius: 80px 80px 0 0;
+            border-radius: 90px 90px 0 0;
             z-index: 50;
         }
         
-        /* МУШКИ */
+        /* МУШКИ С АНИМАЦИЕЙ ПОЕДАНИЯ */
         .fly {
             position: absolute;
-            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            background: black;
+            border-radius: 10px;
             z-index: 80;
+            transition: transform 0.5s, opacity 0.5s;
         }
         
-        .fly-normal {
-            width: 18px;
-            height: 18px;
-            background: #212121;
-            animation: flyNormal 3s infinite ease-in-out;
-        }
-        
-        .fly-fast {
-            width: 15px;
-            height: 15px;
-            background: #d32f2f;
-            animation: flyFast 2s infinite linear;
-        }
-        
-        .fly-fat {
+        /* Крылья мушек */
+        .fly::before, .fly::after {
+            content: '';
+            position: absolute;
             width: 25px;
-            height: 25px;
-            background: #ff9800;
-            animation: flyFat 4s infinite ease-in-out;
+            height: 8px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 4px;
+            top: 5px;
         }
         
-        /* ПАНЕЛЬ УПРАВЛЕНИЯ - ФИКСИРОВАННАЯ СЕТКА */
+        .fly::before {
+            left: -15px;
+            transform: rotate(-30deg);
+        }
+        
+        .fly::after {
+            right: -15px;
+            transform: rotate(30deg);
+        }
+        
+        /* Анимация поедания */
+        .fly.eaten {
+            animation: eatAnimation 0.6s forwards;
+        }
+        
+        @keyframes eatAnimation {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: translate(0, -20px) scale(0.5);
+                opacity: 0.7;
+            }
+            100% {
+                transform: translate(0, -40px) scale(0);
+                opacity: 0;
+            }
+        }
+        
+        /* ЭФФЕКТ ПОПАДАНИЯ */
+        .hit-effect {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, rgba(255, 255, 0, 0.8) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 95;
+            animation: ripple 0.6s forwards;
+        }
+        
+        @keyframes ripple {
+            0% {
+                transform: scale(0.5);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(3);
+                opacity: 0;
+            }
+        }
+        
+        /* ВСПЛЫВАЮЩИЕ СООБЩЕНИЯ */
+        .message {
+            position: absolute;
+            color: yellow;
+            font-weight: bold;
+            font-size: 18px;
+            text-shadow: 2px 2px 0 #000;
+            z-index: 200;
+            animation: floatUp 1.2s forwards;
+            pointer-events: none;
+        }
+        
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) scale(0.8);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-60px) scale(1.2);
+                opacity: 0;
+            }
+        }
+        
+        /* КНОПКИ */
         .controls {
-            background: rgba(0, 100, 0, 0.9);
-            padding: 12px;
-            border-radius: 15px;
-            border: 3px solid #0d3b1c;
+            background: #1b5e20;
+            padding: 10px;
+            border-radius: 10px;
+            margin: 10px auto;
+            width: 95%;
         }
         
-        /* ОСНОВНЫЕ КНОПКИ - 2x2 СЕТКА */
-        .main-controls {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
-            margin-bottom: 10px;
-        }
-        
-        /* ВТОРИЧНЫЕ КНОПКИ - 4 в ряд */
-        .secondary-controls {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 6px;
-        }
-        
-        /* КНОПКИ - ОДИНАКОВОГО РАЗМЕРА */
-        .game-btn {
-            background: linear-gradient(to bottom, #ff9800, #f57c00);
+        button {
+            background: #ff9800;
             color: white;
             border: none;
-            padding: 12px 5px;
-            font-size: 14px;
-            border-radius: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 20px;
+            margin: 5px;
             cursor: pointer;
             font-weight: bold;
-            border: 2px solid #e65100;
-            transition: all 0.1s;
-            min-height: 44px; /* Минимальная высота для касания */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            line-height: 1.2;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
-            -webkit-user-select: none;
-            user-select: none;
+            min-width: 120px;
+            transition: all 0.2s;
         }
         
-        .game-btn:active {
-            background: linear-gradient(to bottom, #ff5722, #e64a19);
-            transform: scale(0.98);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        button:hover {
+            background: #ff5722;
+            transform: translateY(-2px);
         }
         
-        .game-btn:disabled {
-            background: linear-gradient(to bottom, #795548, #5d4037);
+        button:active {
+            transform: translateY(1px);
+        }
+        
+        button:disabled {
+            background: #795548;
             cursor: not-allowed;
             transform: none !important;
-            opacity: 0.7;
         }
         
-        /* Иконки в кнопках */
-        .btn-icon {
-            font-size: 18px;
-            margin-bottom: 2px;
-        }
-        
-        .btn-text {
-            font-size: 11px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 100%;
-        }
-        
-        /* Большие кнопки для основных действий */
-        .btn-large {
-            grid-column: span 1;
-            padding: 14px 5px;
-        }
-        
-        /* Маленькие кнопки для второстепенных действий */
-        .btn-small {
-            padding: 10px 3px;
-            font-size: 12px;
-        }
-        
-        /* ЦВЕТА КНОПОК */
-        .btn-start { background: linear-gradient(to bottom, #4caf50, #2e7d32); border-color: #1b5e20; }
-        .btn-pause { background: linear-gradient(to bottom, #2196f3, #1976d2); border-color: #0d47a1; }
-        .btn-add { background: linear-gradient(to bottom, #9c27b0, #7b1fa2); border-color: #4a148c; }
-        .btn-upgrade { background: linear-gradient(to bottom, #ff9800, #f57c00); border-color: #e65100; }
-        .btn-stats { background: linear-gradient(to bottom, #00bcd4, #0097a7); border-color: #006064; }
-        .btn-leaders { background: linear-gradient(to bottom, #ff5722, #e64a19); border-color: #bf360c; }
-        .btn-achievements { background: linear-gradient(to bottom, #ffc107, #ffa000); border-color: #ff6f00; }
-        .btn-shop { background: linear-gradient(to bottom, #8bc34a, #689f38); border-color: #33691e; }
-        
-        /* АДАПТАЦИЯ ДЛЯ ОЧЕНЬ МАЛЕНЬКИХ ЭКРАНОВ */
-        @media (max-width: 350px) {
-            .stat-value {
-                font-size: 14px;
-            }
-            
-            .game-btn {
-                padding: 10px 3px;
-                font-size: 12px;
-                min-height: 40px;
-            }
-            
-            .btn-icon {
-                font-size: 16px;
-            }
-            
-            .btn-text {
-                font-size: 10px;
-            }
-            
-            .secondary-controls {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 5px;
-            }
-        }
-        
-        /* АДАПТАЦИЯ ДЛЯ ГОРИЗОНТАЛЬНОЙ ОРИЕНТАЦИИ */
-        @media (max-height: 500px) {
-            .container {
-                flex-direction: row;
-                flex-wrap: wrap;
-            }
-            
-            .header {
-                width: 100%;
-                margin-bottom: 5px;
-            }
-            
-            .game-area {
-                flex: 2;
-                margin-right: 8px;
-            }
-            
-            .controls {
-                flex: 1;
-                min-width: 150px;
-            }
-            
-            .main-controls,
-            .secondary-controls {
-                display: flex;
-                flex-direction: column;
-            }
-        }
-        
-        /* АНИМАЦИИ МУШЕК */
-        @keyframes flyNormal {
-            0%, 100% { transform: translate(0, 0) rotate(0); }
-            25% { transform: translate(30px, -20px) rotate(10deg); }
-            50% { transform: translate(-15px, -35px) rotate(-10deg); }
-            75% { transform: translate(20px, -15px) rotate(5deg); }
-        }
-        
-        @keyframes flyFast {
-            0%, 100% { transform: translate(0, 0); }
-            25% { transform: translate(40px, -30px); }
-            50% { transform: translate(-25px, -50px); }
-            75% { transform: translate(35px, -25px); }
-        }
-        
-        @keyframes flyFat {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            25% { transform: translate(25px, -15px) scale(1.05); }
-            50% { transform: translate(-10px, -25px) scale(1); }
-            75% { transform: translate(15px, -10px) scale(1.05); }
-        }
-        
-        /* МОДАЛЬНЫЕ ОКНА ДЛЯ МОБИЛЬНЫХ */
-        .modal-overlay {
-            display: none;
+        /* ПРИВЕТСТВИЕ ПРИ ЗАПУСКЕ */
+        .welcome-message {
             position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 1000;
-            overflow-y: auto;
-            padding: 20px 10px;
-            -webkit-overflow-scrolling: touch;
-        }
-        
-        .modal-content {
-            background: linear-gradient(135deg, #2e7d32, #1b5e20);
-            padding: 20px;
-            border-radius: 20px;
-            max-width: 500px;
-            margin: 0 auto;
-            border: 4px solid #0d3b1c;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            position: relative;
-        }
-        
-        .modal-close {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: #f44336;
-            color: white;
-            border: none;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            font-size: 18px;
-            cursor: pointer;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
             display: flex;
-            align-items: center;
+            flex-direction: column;
             justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeOut 2s 2s forwards;
         }
         
-        /* SAFE AREA ДЛЯ IPHONE X+ */
-        @supports (padding: max(0px)) {
-            body {
-                padding-left: max(10px, env(safe-area-inset-left));
-                padding-right: max(10px, env(safe-area-inset-right));
-                padding-bottom: max(10px, env(safe-area-inset-bottom));
-                padding-top: max(10px, env(safe-area-inset-top));
-            }
+        .welcome-text {
+            font-size: 28px;
+            color: #4caf50;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #4caf50;
+            animation: pulse 1s infinite alternate;
         }
         
-        /* ПРЕДОТВРАЩЕНИЕ ВЫДЕЛЕНИЯ ТЕКСТА */
-        .no-select {
-            -webkit-user-select: none;
-            user-select: none;
-        }
-        
-        /* АНИМАЦИЯ НАЖАТИЯ */
-        @keyframes btnPress {
+        @keyframes pulse {
             0% { transform: scale(1); }
-            50% { transform: scale(0.95); }
-            100% { transform: scale(1); }
+            100% { transform: scale(1.1); }
         }
         
-        .btn-press {
-            animation: btnPress 0.2s ease;
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            100% { opacity: 0; visibility: hidden; }
+        }
+        
+        /* АДАПТИВНОСТЬ */
+        @media (max-width: 600px) {
+            .game-area {
+                height: 50vh;
+            }
+            
+            button {
+                padding: 8px 16px;
+                font-size: 14px;
+                min-width: 100px;
+            }
         }
     </style>
 </head>
-<body class="no-select">
-    <div class="container">
-        <!-- ШАПКА -->
-        <div class="header">
-            <h1>🐸 Лягушка-Мухолов</h1>
-            <div class="stats-row">
-                <div class="stat-box">
-                    <div class="stat-label">ОЧКИ</div>
-                    <div class="stat-value" id="score">0</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-label">РЕКОРД</div>
-                    <div class="stat-value" id="record">0</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-label">УРОВЕНЬ</div>
-                    <div class="stat-value" id="level">1</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-label">МОНЕТЫ</div>
-                    <div class="stat-value">🪙 <span id="coins">0</span></div>
-                </div>
-            </div>
+<body>
+    <!-- ПРИВЕТСТВЕННОЕ СООБЩЕНИЕ -->
+    <div class="welcome-message" id="welcomeMessage">
+        <div class="welcome-text">🐸 КВА-КВА! 🐸</div>
+        <div style="color: white; font-size: 18px; text-align: center;">
+            Добро пожаловать в игру!<br>
+            Лови мушек, нажимая на лягушку!
         </div>
+    </div>
+    
+    <h1>🐸 Лягушка-Мухолов 🦟</h1>
+    
+    <div class="stats">
+        <div>Поймано: <span class="score" id="score">0</span></div>
+        <div>Рекорд: <span class="score" id="record">0</span></div>
+        <div>Мушки: <span class="score" id="flyCount">0</span></div>
+    </div>
+    
+    <div class="game-area" id="gameArea">
+        <div class="leaf"></div>
         
-        <!-- ИГРОВОЕ ПОЛЕ -->
-        <div class="game-area" id="gameArea">
-            <div class="leaf"></div>
-            
-            <!-- Лягушка -->
-            <div id="frog">
-                <div class="frog-body">
-                    <div class="eye eye-left"><div class="pupil"></div></div>
-                    <div class="eye eye-right"><div class="pupil"></div></div>
-                    <div class="mouth"></div>
-                    <div class="tongue" id="tongue">
-                        <div class="tongue-tip"></div>
-                    </div>
+        <!-- ЛЯГУШКА С УЛУЧШЕННЫМ ЯЗЫКОМ -->
+        <div id="frog">
+            <div class="frog-body">
+                <div id="eye-left"><div id="pupil-left"></div></div>
+                <div id="eye-right"><div id="pupil-right"></div></div>
+                <div id="mouth"></div>
+                <div id="tongue">
+                    <div class="tongue-tip"></div>
                 </div>
-            </div>
-        </div>
-        
-        <!-- ПАНЕЛЬ УПРАВЛЕНИЯ -->
-        <div class="controls">
-            <!-- ОСНОВНЫЕ КНОПКИ -->
-            <div class="main-controls">
-                <button id="startBtn" class="game-btn btn-large btn-start">
-                    <span class="btn-icon">▶️</span>
-                    <span class="btn-text">ИГРАТЬ</span>
-                </button>
-                
-                <button id="pauseBtn" class="game-btn btn-large btn-pause" disabled>
-                    <span class="btn-icon">⏸️</span>
-                    <span class="btn-text">ПАУЗА</span>
-                </button>
-                
-                <button id="addFliesBtn" class="game-btn btn-large btn-add">
-                    <span class="btn-icon">🦟</span>
-                    <span class="btn-text">+5 МУШЕК</span>
-                </button>
-                
-                <button id="upgradeBtn" class="game-btn btn-large btn-upgrade">
-                    <span class="btn-icon">⚡</span>
-                    <span class="btn-text">УЛУЧШЕНИЯ</span>
-                </button>
-            </div>
-            
-            <!-- ВТОРИЧНЫЕ КНОПКИ -->
-            <div class="secondary-controls">
-                <button id="statsBtn" class="game-btn btn-small btn-stats">
-                    <span class="btn-icon">📊</span>
-                    <span class="btn-text">СТАТ.</span>
-                </button>
-                
-                <button id="leaderboardBtn" class="game-btn btn-small btn-leaders">
-                    <span class="btn-icon">🏆</span>
-                    <span class="btn-text">ЛИДЕРЫ</span>
-                </button>
-                
-                <button id="achievementsBtn" class="game-btn btn-small btn-achievements">
-                    <span class="btn-icon">🏅</span>
-                    <span class="btn-text">ДОСТИЖ.</span>
-                </button>
-                
-                <button id="shopBtn" class="game-btn btn-small btn-shop">
-                    <span class="btn-icon">🛒</span>
-                    <span class="btn-text">МАГАЗИН</span>
-                </button>
             </div>
         </div>
     </div>
     
-    <!-- МОДАЛЬНЫЕ ОКНА -->
-    <div id="statsModal" class="modal-overlay">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal('statsModal')">×</button>
-            <h2 style="color: #ffeb3b; margin-bottom: 15px;">📊 СТАТИСТИКА</h2>
-            <div id="statsContent" style="text-align: left;"></div>
-        </div>
+    <div class="controls">
+        <button id="startBtn">▶️ НАЧАТЬ</button>
+        <button id="addBtn">🦟 +3</button>
+        <button id="resetBtn">🔄 СБРОС</button>
+        <button id="soundBtn">🔊 Вкл звук</button>
+        <p style="margin-top: 10px; color: #c8e6c9; font-size: 14px;">
+            Нажми на лягушку, чтобы поймать мушку!
+        </p>
     </div>
-    
-    <!-- ТОЛЬКО БАЗОВЫЕ МОДАЛЬНЫЕ ОКНА, ОСТАЛЬНЫЕ АНАЛОГИЧНО -->
 
     <!-- ЗВУКИ -->
-    <audio id="clickSound" preload="auto">
-        <source src="https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3" type="audio/mpeg">
-    </audio>
-    
     <audio id="startSound" preload="auto">
         <source src="https://assets.mixkit.co/sfx/preview/mixkit-frog-croak-760.mp3" type="audio/mpeg">
     </audio>
+    
+    <audio id="catchSound" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-bite-crunch-2290.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="tongueSound" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-whip-swoosh-1100.mp3" type="audio/mpeg">
+    </audio>
 
     <script>
-        // ========== БАЗОВЫЕ ПЕРЕМЕННЫЕ ==========
-        let gameData = {
-            score: 0,
-            record: localStorage.getItem('frogRecord') || 0,
-            level: 1,
-            coins: parseInt(localStorage.getItem('frogCoins')) || 0
-        };
-        
+        // ========== ПЕРЕМЕННЫЕ ==========
+        let score = 0;
+        let record = localStorage.getItem('frogRecord') || 0;
         let gameActive = false;
-        let gamePaused = false;
         let flies = [];
+        let soundEnabled = true;
         
         // ========== ЭЛЕМЕНТЫ ==========
         const gameArea = document.getElementById('gameArea');
@@ -591,307 +406,368 @@
         const tongue = document.getElementById('tongue');
         const scoreElement = document.getElementById('score');
         const recordElement = document.getElementById('record');
-        const levelElement = document.getElementById('level');
-        const coinsElement = document.getElementById('coins');
-        
-        // Кнопки
+        const flyCountElement = document.getElementById('flyCount');
         const startBtn = document.getElementById('startBtn');
-        const pauseBtn = document.getElementById('pauseBtn');
-        const addFliesBtn = document.getElementById('addFliesBtn');
-        const upgradeBtn = document.getElementById('upgradeBtn');
-        const statsBtn = document.getElementById('statsBtn');
-        const leaderboardBtn = document.getElementById('leaderboardBtn');
-        const achievementsBtn = document.getElementById('achievementsBtn');
-        const shopBtn = document.getElementById('shopBtn');
+        const addBtn = document.getElementById('addBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const soundBtn = document.getElementById('soundBtn');
+        const welcomeMessage = document.getElementById('welcomeMessage');
+        
+        // ========== ЗВУКИ ==========
+        const startSound = document.getElementById('startSound');
+        const catchSound = document.getElementById('catchSound');
+        const tongueSound = document.getElementById('tongueSound');
         
         // ========== ИНИЦИАЛИЗАЦИЯ ==========
-        function init() {
-            updateDisplay();
-            
-            // Анимация приветствия
-            setTimeout(() => {
-                frog.style.transform = 'translateX(-50%) scale(1.1)';
-                setTimeout(() => {
-                    frog.style.transform = 'translateX(-50%) scale(1)';
-                }, 200);
-            }, 500);
-        }
+        recordElement.textContent = record;
         
-        function updateDisplay() {
-            scoreElement.textContent = gameData.score;
-            recordElement.textContent = gameData.record;
-            levelElement.textContent = gameData.level;
-            coinsElement.textContent = gameData.coins;
-        }
+        // Проиграть звук приветствия при запуске
+        setTimeout(() => {
+            if (soundEnabled) {
+                startSound.currentTime = 0;
+                startSound.play().catch(e => console.log("Звук не воспроизведен"));
+            }
+        }, 500);
         
-        // ========== УПРАВЛЕНИЕ КНОПКАМИ ==========
-        function animateButton(btn) {
-            btn.classList.add('btn-press');
-            setTimeout(() => btn.classList.remove('btn-press'), 200);
-        }
-        
-        function playClickSound() {
-            try {
-                const sound = document.getElementById('clickSound');
-                sound.currentTime = 0;
-                sound.play().catch(() => {});
-            } catch(e) {}
-        }
-        
-        // ========== ИГРОВАЯ ЛОГИКА ==========
+        // ========== СИСТЕМА МУШЕК ==========
         function createFly() {
-            if (!gameActive || gamePaused) return;
-            
-            const types = ['normal', 'fast'];
-            if (gameData.level >= 3) types.push('fat');
-            const type = types[Math.floor(Math.random() * types.length)];
-            
             const fly = document.createElement('div');
-            fly.className = `fly fly-${type}`;
+            fly.className = 'fly';
             
             // Позиция
-            const x = 20 + Math.random() * (gameArea.offsetWidth - 40);
-            const y = 20 + Math.random() * (gameArea.offsetHeight - 80);
+            const x = Math.random() * (gameArea.offsetWidth - 40);
+            const y = Math.random() * (gameArea.offsetHeight - 120);
             
             fly.style.left = x + 'px';
             fly.style.top = y + 'px';
             
+            // Движение
+            let angle = Math.random() * Math.PI * 2;
+            let speed = 1 + Math.random() * 2;
+            let dx = Math.cos(angle) * speed;
+            let dy = Math.sin(angle) * speed;
+            
             gameArea.appendChild(fly);
-            flies.push(fly);
+            
+            const flyData = {
+                element: fly,
+                x: x,
+                y: y,
+                dx: dx,
+                dy: dy,
+                caught: false
+            };
+            
+            flies.push(flyData);
+            updateFlyCount();
+            
+            // Движение мушки
+            function moveFly() {
+                if (!flyData.caught && fly.parentNode) {
+                    flyData.x += flyData.dx;
+                    flyData.y += flyData.dy;
+                    
+                    // Отскок от границ
+                    if (flyData.x <= 0 || flyData.x >= gameArea.offsetWidth - 20) {
+                        flyData.dx *= -1;
+                    }
+                    if (flyData.y <= 0 || flyData.y >= gameArea.offsetHeight - 20) {
+                        flyData.dy *= -1;
+                    }
+                    
+                    fly.style.left = flyData.x + 'px';
+                    fly.style.top = flyData.y + 'px';
+                    
+                    requestAnimationFrame(moveFly);
+                }
+            }
+            
+            moveFly();
             
             // Автоудаление
             setTimeout(() => {
-                if (fly.parentNode) {
+                if (fly.parentNode && !flyData.caught) {
                     fly.remove();
-                    flies = flies.filter(f => f !== fly);
+                    flies = flies.filter(f => f !== flyData);
+                    updateFlyCount();
                 }
-            }, 8000);
+            }, 10000);
+            
+            return flyData;
         }
         
-        function catchFlies() {
-            if (!gameActive || gamePaused) return;
+        function updateFlyCount() {
+            flyCountElement.textContent = flies.length;
+        }
+        
+        // ========== АНИМАЦИИ И ЭФФЕКТЫ ==========
+        function createHitEffect(x, y) {
+            const effect = document.createElement('div');
+            effect.className = 'hit-effect';
+            effect.style.left = (x - 20) + 'px';
+            effect.style.top = (y - 20) + 'px';
+            gameArea.appendChild(effect);
             
-            // Анимация языка
-            tongue.style.height = '80px';
+            setTimeout(() => {
+                if (effect.parentNode) {
+                    effect.remove();
+                }
+            }, 600);
+        }
+        
+        function createMessage(text, x, y) {
+            const msg = document.createElement('div');
+            msg.className = 'message';
+            msg.textContent = text;
+            msg.style.left = x + 'px';
+            msg.style.top = y + 'px';
+            gameArea.appendChild(msg);
+            
+            setTimeout(() => {
+                if (msg.parentNode) {
+                    msg.remove();
+                }
+            }, 1200);
+        }
+        
+        // ========== ЛОВЛЯ МУШЕК С АНИМАЦИЕЙ ==========
+        function catchFlies() {
+            if (!gameActive) {
+                createMessage('Сначала начни игру!', 50, 50);
+                return;
+            }
+            
+            // Анимация выстрела языка (ДЛИННЕЕ!)
+            tongue.style.height = '120px'; // Увеличили длину языка
+            tongueSound.currentTime = 0;
+            if (soundEnabled) tongueSound.play().catch(() => {});
             
             // Анимация лягушки
-            frog.style.transform = 'translateX(-50%) scale(1.1)';
+            frog.style.transform = 'scale(1.1)';
             setTimeout(() => {
-                frog.style.transform = 'translateX(-50%) scale(1)';
+                frog.style.transform = 'scale(1)';
             }, 200);
             
+            // Звук кваканья
+            startSound.currentTime = 0;
+            if (soundEnabled) startSound.play().catch(() => {});
+            
             // Проверка попадания
-            let caught = 0;
-            flies.forEach(fly => {
-                const flyRect = fly.getBoundingClientRect();
-                const frogRect = frog.getBoundingClientRect();
+            const frogRect = frog.getBoundingClientRect();
+            const gameRect = gameArea.getBoundingClientRect();
+            const frogCenterX = frogRect.left + 70;
+            const frogCenterY = frogRect.top + 50;
+            
+            let caughtCount = 0;
+            
+            flies.forEach(flyData => {
+                if (flyData.caught) return;
+                
+                const flyRect = flyData.element.getBoundingClientRect();
+                const flyCenterX = flyRect.left + 10;
+                const flyCenterY = flyRect.top + 10;
                 
                 const distance = Math.sqrt(
-                    Math.pow(flyRect.left - frogRect.left, 2) +
-                    Math.pow(flyRect.top - frogRect.top, 2)
+                    Math.pow(flyCenterX - frogCenterX, 2) +
+                    Math.pow(flyCenterY - frogCenterY, 2)
                 );
                 
-                if (distance < 100) {
-                    caught++;
-                    fly.style.opacity = '0';
-                    fly.style.transform = 'scale(0)';
+                // Радиус увеличен благодаря длинному языку
+                if (distance < 130) {
+                    caughtCount++;
+                    flyData.caught = true;
                     
+                    // Анимация поедания
+                    flyData.element.classList.add('eaten');
+                    
+                    // Эффект попадания
+                    createHitEffect(
+                        flyRect.left - gameRect.left + 10,
+                        flyRect.top - gameRect.top + 10
+                    );
+                    
+                    // Звук поедания
+                    catchSound.currentTime = 0;
+                    if (soundEnabled) catchSound.play().catch(() => {});
+                    
+                    // Сообщение
+                    createMessage(
+                        '+1 🎯',
+                        flyRect.left - gameRect.left,
+                        flyRect.top - gameRect.top
+                    );
+                    
+                    // Удаление мушки
                     setTimeout(() => {
-                        if (fly.parentNode) {
-                            fly.remove();
-                            flies = flies.filter(f => f !== fly);
+                        if (flyData.element.parentNode) {
+                            flyData.element.remove();
+                            flies = flies.filter(f => f !== flyData);
+                            updateFlyCount();
                         }
-                    }, 300);
+                    }, 600);
                 }
             });
             
             // Обновление счета
-            if (caught > 0) {
-                gameData.score += caught;
-                gameData.coins += Math.floor(caught / 2);
+            if (caughtCount > 0) {
+                score += caughtCount;
+                scoreElement.textContent = score;
                 
-                if (gameData.score > gameData.record) {
-                    gameData.record = gameData.score;
-                    localStorage.setItem('frogRecord', gameData.record);
+                // Рекорд
+                if (score > record) {
+                    record = score;
+                    recordElement.textContent = record;
+                    localStorage.setItem('frogRecord', record);
+                    
+                    if (score % 5 === 0) {
+                        createMessage(
+                            `Рекорд! ${score} 🏆`,
+                            frogRect.left - gameRect.left + 70,
+                            frogRect.top - gameRect.top - 30
+                        );
+                    }
                 }
-                
-                localStorage.setItem('frogCoins', gameData.coins);
-                updateDisplay();
+            } else if (flies.length > 0) {
+                createMessage(
+                    'Промах! 👎',
+                    frogRect.left - gameRect.left + 70,
+                    frogRect.top - gameRect.top - 30
+                );
             }
             
             // Убрать язык
             setTimeout(() => {
                 tongue.style.height = '0';
-            }, 300);
+            }, 400); // Увеличили время видимости языка
         }
         
-        // ========== ОСНОВНЫЕ ФУНКЦИИ ИГРЫ ==========
-        function startGame() {
+        // ========== УПРАВЛЕНИЕ ИГРОЙ ==========
+        startBtn.onclick = function() {
             if (gameActive) return;
             
             gameActive = true;
-            gamePaused = false;
-            gameData.score = 0;
+            score = 0;
+            scoreElement.textContent = score;
             
-            // Очистка
-            flies.forEach(fly => fly.remove());
-            flies = [];
+            // Звук начала игры
+            startSound.currentTime = 0;
+            if (soundEnabled) startSound.play().catch(() => {});
             
-            // Создание мушек
-            for (let i = 0; i < 5; i++) {
-                setTimeout(createFly, i * 500);
-            }
-            
-            // Обновление интерфейса
-            startBtn.disabled = true;
-            startBtn.querySelector('.btn-text').textContent = 'ИГРА...';
-            pauseBtn.disabled = false;
-            
-            // Звук
-            try {
-                const sound = document.getElementById('startSound');
-                sound.currentTime = 0;
-                sound.play().catch(() => {});
-            } catch(e) {}
-            
-            updateDisplay();
-        }
-        
-        function pauseGame() {
-            gamePaused = !gamePaused;
-            
-            if (gamePaused) {
-                pauseBtn.querySelector('.btn-text').textContent = 'ПРОДОЛЖ.';
-            } else {
-                pauseBtn.querySelector('.btn-text').textContent = 'ПАУЗА';
-            }
-        }
-        
-        // ========== ОБРАБОТЧИКИ СОБЫТИЙ ==========
-        // Касание лягушки
-        frog.addEventListener('touchstart', function(e) {
-            e.preventDefault();
-            catchFlies();
-        });
-        
-        frog.addEventListener('click', catchFlies);
-        
-        // Обработчики кнопок с анимацией
-        [startBtn, pauseBtn, addFliesBtn, upgradeBtn, statsBtn, leaderboardBtn, achievementsBtn, shopBtn]
-            .forEach(btn => {
-                btn.addEventListener('touchstart', function(e) {
-                    e.preventDefault();
-                    animateButton(this);
-                    playClickSound();
-                });
-                
-                btn.addEventListener('click', function() {
-                    animateButton(this);
-                    playClickSound();
-                });
-            });
-        
-        // Основные кнопки
-        startBtn.addEventListener('click', startGame);
-        pauseBtn.addEventListener('click', pauseGame);
-        addFliesBtn.addEventListener('click', function() {
-            if (!gameActive || gamePaused) return;
-            for (let i = 0; i < 5; i++) {
-                setTimeout(createFly, i * 200);
-            }
-        });
-        
-        // Модальные окна
-        statsBtn.addEventListener('click', function() {
-            document.getElementById('statsContent').innerHTML = `
-                <div style="margin-bottom: 10px;">
-                    <strong>Очков в этой игре:</strong> ${gameData.score}
-                </div>
-                <div style="margin-bottom: 10px;">
-                    <strong>Ваш рекорд:</strong> ${gameData.record}
-                </div>
-                <div style="margin-bottom: 10px;">
-                    <strong>Уровень:</strong> ${gameData.level}
-                </div>
-                <div style="margin-bottom: 10px;">
-                    <strong>Монет:</strong> 🪙 ${gameData.coins}
-                </div>
-                <div style="margin-bottom: 10px;">
-                    <strong>Мушек на экране:</strong> ${flies.length}
-                </div>
-            `;
-            openModal('statsModal');
-        });
-        
-        upgradeBtn.addEventListener('click', function() {
-            alert('Улучшения скоро будут доступны!');
-        });
-        
-        leaderboardBtn.addEventListener('click', function() {
-            alert('Таблица лидеров скоро будет доступна!');
-        });
-        
-        achievementsBtn.addEventListener('click', function() {
-            alert('Достижения скоро будут доступны!');
-        });
-        
-        shopBtn.addEventListener('click', function() {
-            alert('Магазин скоро будет открыт!');
-        });
-        
-        // ========== МОДАЛЬНЫЕ ОКНА ==========
-        function openModal(modalId) {
-            document.getElementById(modalId).style.display = 'block';
-        }
-        
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-        }
-        
-        // Закрытие модального окна при клике вне его
-        document.querySelectorAll('.modal-overlay').forEach(modal => {
-            modal.addEventListener('click', function(e) {
-                if (e.target === this) {
-                    this.style.display = 'none';
+            // Очистка старых мушек
+            flies.forEach(f => {
+                if (f.element.parentNode) {
+                    f.element.remove();
                 }
             });
-        });
-        
-        // ========== АВТОМАТИЧЕСКИЕ ДЕЙСТВИЯ ==========
-        setInterval(() => {
-            if (gameActive && !gamePaused && flies.length < 10) {
-                createFly();
+            flies = [];
+            
+            // Создание начальных мушек
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => createFly(), i * 400);
             }
-        }, 2000);
+            
+            // Обновление кнопки
+            startBtn.disabled = true;
+            startBtn.textContent = '🎮 ИГРАЕТСЯ...';
+            
+            // Сообщение
+            createMessage('Игра началась!', gameArea.offsetWidth/2 - 60, 50);
+        };
+        
+        addBtn.onclick = function() {
+            if (!gameActive) {
+                createMessage('Сначала начни игру!', 50, 50);
+                return;
+            }
+            
+            for (let i = 0; i < 3; i++) {
+                setTimeout(() => createFly(), i * 300);
+            }
+            
+            createMessage('+3 мушки 🦟', gameArea.offsetWidth/2 - 40, 50);
+        };
+        
+        resetBtn.onclick = function() {
+            gameActive = false;
+            score = 0;
+            scoreElement.textContent = score;
+            
+            flies.forEach(f => {
+                if (f.element.parentNode) {
+                    f.element.remove();
+                }
+            });
+            flies = [];
+            updateFlyCount();
+            
+            startBtn.disabled = false;
+            startBtn.textContent = '▶️ НАЧАТЬ';
+        };
+        
+        // Управление звуком
+        soundBtn.onclick = function() {
+            soundEnabled = !soundEnabled;
+            soundBtn.textContent = soundEnabled ? '🔊 Вкл звук' : '🔇 Выкл звук';
+            
+            if (soundEnabled) {
+                // Проиграть тестовый звук
+                startSound.currentTime = 0;
+                startSound.play().catch(() => {});
+            }
+        };
+        
+        // ========== СОБЫТИЯ ==========
+        frog.onclick = catchFlies;
         
         // Демо-мушка при загрузке
         setTimeout(() => {
             if (!gameActive) {
                 createFly();
+                createMessage('Нажми "НАЧАТЬ"!', gameArea.offsetWidth/2 - 50, 50);
             }
         }, 1000);
+        
+        // Автоматическое добавление мушек
+        setInterval(() => {
+            if (gameActive && flies.length < 8 && Math.random() > 0.4) {
+                createFly();
+            }
+        }, 3000);
         
         // ========== TELEGRAM ИНТЕГРАЦИЯ ==========
         if (typeof Telegram !== 'undefined' && Telegram.WebApp) {
             Telegram.WebApp.ready();
             Telegram.WebApp.expand();
             
-            // Настройка основной кнопки
-            Telegram.WebApp.MainButton.setText('🔄 НОВАЯ ИГРА');
+            // Кнопка "Играть снова" в Telegram
+            Telegram.WebApp.MainButton.setText('🔄 Играть снова');
             Telegram.WebApp.MainButton.onClick(() => {
-                location.reload();
+                resetBtn.click();
+                setTimeout(() => startBtn.click(), 300);
             });
             
-            // Показывать кнопку при хорошем результате
+            // Показываем кнопку при хорошем результате
             setInterval(() => {
-                if (gameData.score > 10 && gameActive) {
+                if (score > 3 && gameActive && !Telegram.WebApp.MainButton.isVisible) {
                     Telegram.WebApp.MainButton.show();
                 }
-            }, 3000);
+            }, 2000);
         }
         
-        // ========== ЗАПУСК ==========
-        init();
+        // ========== ИНИЦИАЛИЗАЦИЯ ЗВУКОВ ==========
+        // Предзагрузка звуков
+        window.addEventListener('touchstart', function() {
+            // Это нужно для авто-воспроизведения на мобильных
+            startSound.volume = 0;
+            startSound.play().then(() => {
+                startSound.pause();
+                startSound.currentTime = 0;
+                startSound.volume = 1;
+            }).catch(() => {});
+        }, { once: true });
+        
+        console.log('🐸 Игра "Лягушка-Мухолов" улучшена!');
+        console.log('🎯 Теперь с анимациями и звуками!');
     </script>
 </body>
 </html>
