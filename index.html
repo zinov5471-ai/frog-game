@@ -5,294 +5,233 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🐸 Лягушка ловит мух</title>
     <style>
-        /* ОЧЕНЬ ПРОСТЫЕ СТИЛИ - без сложных эффектов */
+        /* АБСОЛЮТНО ПРОСТЫЕ СТИЛИ */
         * {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
         
         body {
             background: #2e7d32;
             color: white;
-            font-family: 'Arial', sans-serif;
+            font-family: Arial, sans-serif;
             text-align: center;
             padding: 10px;
             min-height: 100vh;
-            overflow: hidden;
-        }
-        
-        .header {
-            background: #1b5e20;
-            padding: 15px;
-            border-radius: 15px;
-            margin-bottom: 15px;
-            border: 3px solid #0d3b1c;
         }
         
         h1 {
-            color: #ffeb3b;
-            margin-bottom: 10px;
-            font-size: 24px;
+            color: yellow;
+            margin: 10px 0;
+            font-size: 22px;
         }
         
         .stats {
+            background: #1b5e20;
+            padding: 10px;
+            border-radius: 10px;
+            margin: 10px auto;
+            width: 95%;
             display: flex;
             justify-content: space-around;
-            font-size: 18px;
             font-weight: bold;
         }
         
         .score {
-            color: #ffeb3b;
-            font-size: 22px;
+            color: yellow;
+            font-size: 20px;
         }
         
         /* ИГРОВОЕ ПОЛЕ */
         .game-area {
             background: #4caf50;
             border: 5px solid #1b5e20;
-            border-radius: 20px;
+            border-radius: 15px;
             height: 60vh;
-            max-height: 500px;
+            max-height: 400px;
             position: relative;
+            margin: 10px auto;
             overflow: hidden;
-            margin: 0 auto 20px;
         }
         
-        /* СУПЕР ПРОСТАЯ ЛЯГУШКА - без артефактов */
+        /* САМАЯ ПРОСТАЯ ЛЯГУШКА в мире! */
         #frog {
             position: absolute;
-            bottom: 30px;
+            bottom: 20px;
             left: 50%;
-            transform: translateX(-50%);
+            margin-left: -70px; /* половина ширины */
             width: 140px;
             height: 100px;
             cursor: pointer;
             z-index: 100;
         }
         
-        /* Тело лягушки - ОДИН ПРОСТОЙ ЭЛЕМЕНТ */
+        /* Тело - ОДИН div с абсолютными координатами для элементов */
         .frog-body {
             width: 140px;
             height: 100px;
             background: #4caf50;
-            border-radius: 50% 50% 40% 40%;
-            border: 5px solid #2e7d32;
+            border-radius: 70px 70px 60px 60px; /* простые радиусы */
+            border: 4px solid #2e7d32;
             position: relative;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
         
-        /* Простые глаза - КВАДРАТНЫЕ для надежности */
-        .eye {
+        /* Глаза - АБСОЛЮТНЫЕ КООРДИНАТЫ */
+        #eye-left {
             position: absolute;
-            top: 20px;
+            top: 15px;
+            left: 25px;
             width: 30px;
             height: 30px;
             background: white;
             border: 3px solid black;
-            border-radius: 50%;
+            border-radius: 15px;
         }
         
-        .eye-left {
-            left: 25px;
-        }
-        
-        .eye-right {
+        #eye-right {
+            position: absolute;
+            top: 15px;
             right: 25px;
+            width: 30px;
+            height: 30px;
+            background: white;
+            border: 3px solid black;
+            border-radius: 15px;
         }
         
         /* Зрачки */
-        .pupil {
+        #pupil-left, #pupil-right {
             width: 15px;
             height: 15px;
             background: black;
-            border-radius: 50%;
-            margin: 5px auto 0;
+            border-radius: 8px;
+            margin: 6px auto 0;
         }
         
-        /* Простой рот */
-        .mouth {
+        /* Рот - ОТДЕЛЬНЫЙ элемент с фиксированной позицией */
+        #mouth {
             position: absolute;
             bottom: 25px;
-            left: 50%;
-            transform: translateX(-50%);
+            left: 50px;
             width: 40px;
             height: 15px;
             background: #333;
             border-radius: 0 0 20px 20px;
         }
         
-        /* Простой язык */
-        .tongue {
+        /* Язык */
+        #tongue {
             position: absolute;
             bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
+            left: 67px;
             width: 6px;
             height: 0;
-            background: #ff5252;
-            transition: height 0.3s;
-            z-index: 90;
+            background: red;
         }
         
-        /* Лист под лягушкой */
+        /* Лист */
         .leaf {
             position: absolute;
             bottom: 0;
             left: 50%;
-            transform: translateX(-50%);
+            margin-left: -90px;
             width: 180px;
             height: 60px;
             background: #7cb342;
-            border-radius: 50% 50% 0 0;
+            border-radius: 90px 90px 0 0;
             z-index: 50;
         }
         
-        /* Простые мушки */
+        /* Мушки */
         .fly {
             position: absolute;
             width: 20px;
             height: 20px;
             background: black;
-            border-radius: 50%;
-            animation: flyAround 4s infinite linear;
+            border-radius: 10px;
             z-index: 80;
-        }
-        
-        @keyframes flyAround {
-            0% { transform: translate(0, 0); }
-            25% { transform: translate(80px, -60px); }
-            50% { transform: translate(40px, -100px); }
-            75% { transform: translate(-40px, -60px); }
-            100% { transform: translate(0, 0); }
-        }
-        
-        .fly.caught {
-            animation: none;
-            opacity: 0;
-            transform: scale(0);
-            transition: all 0.5s;
         }
         
         /* Кнопки */
         .controls {
             background: #1b5e20;
-            padding: 15px;
-            border-radius: 15px;
-            border: 3px solid #0d3b1c;
+            padding: 10px;
+            border-radius: 10px;
+            margin: 10px auto;
+            width: 95%;
         }
         
         button {
             background: #ff9800;
             color: white;
             border: none;
-            padding: 12px 25px;
+            padding: 10px 20px;
             font-size: 16px;
-            border-radius: 25px;
+            border-radius: 20px;
             margin: 5px;
             cursor: pointer;
             font-weight: bold;
-            min-width: 140px;
+            min-width: 120px;
         }
         
-        button:hover {
+        button:active {
             background: #ff5722;
         }
         
         button:disabled {
             background: #795548;
-            cursor: not-allowed;
         }
         
-        /* Всплывающие сообщения */
+        /* Сообщения */
         .message {
             position: absolute;
-            color: #ffeb3b;
+            color: yellow;
             font-weight: bold;
-            font-size: 18px;
-            animation: floatUp 1s forwards;
-            pointer-events: none;
+            font-size: 16px;
             z-index: 200;
-            text-shadow: 2px 2px 0 #000;
-        }
-        
-        @keyframes floatUp {
-            0% { transform: translateY(0); opacity: 1; }
-            100% { transform: translateY(-50px); opacity: 0; }
-        }
-        
-        /* Адаптивность */
-        @media (max-width: 600px) {
-            .game-area {
-                height: 50vh;
-            }
-            
-            #frog {
-                width: 120px;
-                height: 85px;
-            }
-            
-            .frog-body {
-                width: 120px;
-                height: 85px;
-            }
-            
-            .eye {
-                width: 25px;
-                height: 25px;
-            }
-            
-            button {
-                padding: 10px 20px;
-                min-width: 120px;
-                font-size: 14px;
-            }
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>🐸 Лягушка-Мухолов 🦟</h1>
-        <div class="stats">
-            <div>Поймано: <span class="score" id="score">0</span></div>
-            <div>Рекорд: <span class="score" id="record">0</span></div>
-            <div>Мушки: <span class="score" id="flyCount">0</span></div>
-        </div>
+    <h1>🐸 Лягушка-Мухолов 🦟</h1>
+    
+    <div class="stats">
+        <div>Поймано: <span class="score" id="score">0</span></div>
+        <div>Рекорд: <span class="score" id="record">0</span></div>
+        <div>Мушки: <span class="score" id="flyCount">0</span></div>
     </div>
     
     <div class="game-area" id="gameArea">
-        <!-- Лист -->
         <div class="leaf"></div>
         
-        <!-- Лягушка - ПРОСТАЯ СТРУКТУРА -->
+        <!-- ЛЯГУШКА с АБСОЛЮТНЫМИ элементами -->
         <div id="frog">
             <div class="frog-body">
-                <div class="eye eye-left"><div class="pupil"></div></div>
-                <div class="eye eye-right"><div class="pupil"></div></div>
-                <div class="mouth"></div>
-                <div class="tongue" id="tongue"></div>
+                <div id="eye-left"><div id="pupil-left"></div></div>
+                <div id="eye-right"><div id="pupil-right"></div></div>
+                <div id="mouth"></div>
+                <div id="tongue"></div>
             </div>
         </div>
-        
-        <!-- Мушки будут добавляться здесь -->
     </div>
     
     <div class="controls">
-        <button id="startBtn">▶️ НАЧАТЬ ИГРУ</button>
-        <button id="addBtn">🦟 +3 Мушки</button>
-        <button id="resetBtn">🔄 ЗАНОВО</button>
-        <p style="margin-top: 10px; color: #c8e6c9;">Нажми на лягушку, чтобы поймать мушку!</p>
+        <button id="startBtn">▶️ НАЧАТЬ</button>
+        <button id="addBtn">🦟 +3</button>
+        <button id="resetBtn">🔄 СБРОС</button>
+        <p style="margin-top: 10px; color: #c8e6c9; font-size: 14px;">
+            Нажми на лягушку, чтобы поймать мушку!
+        </p>
     </div>
 
     <script>
-        // ========== ПЕРЕМЕННЫЕ ИГРЫ ==========
+        // ========== ПЕРЕМЕННЫЕ ==========
         let score = 0;
         let record = localStorage.getItem('frogRecord') || 0;
         let gameActive = false;
         let flies = [];
         
-        // ========== ПОЛУЧАЕМ ЭЛЕМЕНТЫ ==========
+        // ========== ЭЛЕМЕНТЫ ==========
         const gameArea = document.getElementById('gameArea');
         const frog = document.getElementById('frog');
         const tongue = document.getElementById('tongue');
@@ -306,284 +245,195 @@
         // ========== ИНИЦИАЛИЗАЦИЯ ==========
         recordElement.textContent = record;
         
-        // ========== ФУНКЦИИ ДЛЯ МУШЕК ==========
+        // ========== СИСТЕМА МУШЕК ==========
         function createFly() {
             const fly = document.createElement('div');
             fly.className = 'fly';
             
-            // Случайная начальная позиция
-            const startX = 30 + Math.random() * (gameArea.offsetWidth - 60);
-            const startY = 30 + Math.random() * (gameArea.offsetHeight - 100);
+            // Позиция
+            const x = Math.random() * (gameArea.offsetWidth - 30);
+            const y = Math.random() * (gameArea.offsetHeight - 100);
             
-            fly.style.left = startX + 'px';
-            fly.style.top = startY + 'px';
+            fly.style.left = x + 'px';
+            fly.style.top = y + 'px';
             
-            // Случайная скорость
-            const speed = 3 + Math.random() * 3;
-            fly.style.animationDuration = speed + 's';
+            // Движение
+            let angle = Math.random() * Math.PI * 2;
+            let speed = 1 + Math.random() * 2;
+            let dx = Math.cos(angle) * speed;
+            let dy = Math.sin(angle) * speed;
             
             gameArea.appendChild(fly);
-            flies.push({
-                element: fly,
-                x: startX,
-                y: startY
-            });
             
+            const flyData = {
+                element: fly,
+                x: x,
+                y: y,
+                dx: dx,
+                dy: dy
+            };
+            
+            flies.push(flyData);
             updateFlyCount();
             
-            // Автоудаление через время
+            // Движение мушки
+            function moveFly() {
+                if (!flyData.caught && fly.parentNode) {
+                    flyData.x += flyData.dx;
+                    flyData.y += flyData.dy;
+                    
+                    // Отскок от границ
+                    if (flyData.x <= 0 || flyData.x >= gameArea.offsetWidth - 20) {
+                        flyData.dx *= -1;
+                    }
+                    if (flyData.y <= 0 || flyData.y >= gameArea.offsetHeight - 20) {
+                        flyData.dy *= -1;
+                    }
+                    
+                    fly.style.left = flyData.x + 'px';
+                    fly.style.top = flyData.y + 'px';
+                    
+                    requestAnimationFrame(moveFly);
+                }
+            }
+            
+            moveFly();
+            
+            // Автоудаление
             setTimeout(() => {
-                if (fly.parentNode && !fly.classList.contains('caught')) {
+                if (fly.parentNode && !flyData.caught) {
                     fly.remove();
-                    flies = flies.filter(f => f.element !== fly);
+                    flies = flies.filter(f => f !== flyData);
                     updateFlyCount();
                 }
-            }, 10000);
+            }, 8000);
         }
         
         function updateFlyCount() {
             flyCountElement.textContent = flies.length;
         }
         
-        // ========== ФУНКЦИИ ДЛЯ СООБЩЕНИЙ ==========
-        function showMessage(text, x, y) {
-            const msg = document.createElement('div');
-            msg.className = 'message';
-            msg.textContent = text;
-            msg.style.left = x + 'px';
-            msg.style.top = y + 'px';
-            gameArea.appendChild(msg);
-            
-            setTimeout(() => {
-                if (msg.parentNode) msg.remove();
-            }, 1000);
-        }
-        
-        // ========== ЛОВЛЯ МУШЕК ==========
+        // ========== ЛОВЛЯ ==========
         function catchFlies() {
-            if (!gameActive) {
-                showMessage('Сначала начни игру!', 50, 50);
-                return;
-            }
+            if (!gameActive) return;
             
-            // 1. Анимация языка
-            tongue.style.height = '80px';
+            // Язык
+            tongue.style.height = '60px';
             
-            // 2. Анимация лягушки
-            frog.style.transform = 'translateX(-50%) scale(1.1)';
-            setTimeout(() => {
-                frog.style.transform = 'translateX(-50%) scale(1)';
-            }, 200);
-            
-            // 3. Звук (если поддерживается)
-            try {
-                const audio = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-frog-croak-760.mp3');
-                audio.volume = 0.2;
-                audio.play().catch(() => {});
-            } catch(e) {}
-            
-            // 4. Проверка попадания
+            // Проверка
             const frogRect = frog.getBoundingClientRect();
             const gameRect = gameArea.getBoundingClientRect();
-            const frogCenterX = frogRect.left + frogRect.width / 2;
-            const frogCenterY = frogRect.top + frogRect.height / 2;
+            const frogCenterX = frogRect.left + 70;
+            const frogCenterY = frogRect.top + 50;
             
-            let caughtCount = 0;
+            let caught = 0;
             
-            flies.forEach((flyObj, index) => {
-                const fly = flyObj.element;
-                if (fly.classList.contains('caught')) return;
+            flies.forEach(flyData => {
+                if (flyData.caught) return;
                 
-                const flyRect = fly.getBoundingClientRect();
-                const flyCenterX = flyRect.left + flyRect.width / 2;
-                const flyCenterY = flyRect.top + flyRect.height / 2;
+                const flyRect = flyData.element.getBoundingClientRect();
+                const flyCenterX = flyRect.left + 10;
+                const flyCenterY = flyRect.top + 10;
                 
-                // Простая проверка расстояния
                 const distance = Math.sqrt(
                     Math.pow(flyCenterX - frogCenterX, 2) +
                     Math.pow(flyCenterY - frogCenterY, 2)
                 );
                 
-                // Большой радиус попадания!
-                if (distance < 120) {
-                    caughtCount++;
-                    fly.classList.add('caught');
+                if (distance < 100) {
+                    caught++;
+                    flyData.caught = true;
+                    flyData.element.style.opacity = '0';
+                    flyData.element.style.transform = 'scale(0)';
                     
-                    // Показать сообщение
-                    showMessage('+1', 
-                        flyRect.left - gameRect.left,
-                        flyRect.top - gameRect.top
-                    );
-                    
-                    // Звук поедания
-                    try {
-                        const eatSound = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-bite-crunch-2290.mp3');
-                        eatSound.volume = 0.2;
-                        eatSound.play().catch(() => {});
-                    } catch(e) {}
-                    
-                    // Удалить мушку
                     setTimeout(() => {
-                        if (fly.parentNode) {
-                            fly.remove();
-                            flies.splice(index, 1);
+                        if (flyData.element.parentNode) {
+                            flyData.element.remove();
+                            flies = flies.filter(f => f !== flyData);
                             updateFlyCount();
                         }
-                    }, 500);
+                    }, 300);
                 }
             });
             
-            // 5. Обновить счет
-            if (caughtCount > 0) {
-                score += caughtCount;
+            // Счет
+            if (caught > 0) {
+                score += caught;
                 scoreElement.textContent = score;
                 
-                // Обновить рекорд
                 if (score > record) {
                     record = score;
                     recordElement.textContent = record;
                     localStorage.setItem('frogRecord', record);
-                    
-                    if (score % 5 === 0) {
-                        showMessage(`Рекорд! ${score}`, 
-                            frogRect.left - gameRect.left + 70,
-                            frogRect.top - gameRect.top - 30
-                        );
-                    }
                 }
-            } else if (flies.length > 0) {
-                showMessage('Мимо!', 
-                    frogRect.left - gameRect.left + 70,
-                    frogRect.top - gameRect.top - 30
-                );
             }
             
-            // 6. Убрать язык
+            // Убрать язык
             setTimeout(() => {
                 tongue.style.height = '0';
             }, 300);
-            
-            // 7. Добавить новую мушку, если поймали
-            if (caughtCount > 0 && flies.length < 8) {
-                setTimeout(createFly, 500);
-            }
         }
         
-        // ========== УПРАВЛЕНИЕ ИГРОЙ ==========
-        startBtn.addEventListener('click', () => {
+        // ========== УПРАВЛЕНИЕ ==========
+        startBtn.onclick = function() {
             if (gameActive) return;
             
             gameActive = true;
             score = 0;
             scoreElement.textContent = score;
             
-            // Очистить старых мушек
-            flies.forEach(fly => {
-                if (fly.element.parentNode) {
-                    fly.element.remove();
-                }
-            });
+            // Очистка
+            flies.forEach(f => f.element.remove());
             flies = [];
             
-            // Создать начальных мушек
+            // Мушки
             for (let i = 0; i < 5; i++) {
-                setTimeout(() => createFly(), i * 300);
+                setTimeout(createFly, i * 400);
             }
             
-            // Обновить кнопку
             startBtn.disabled = true;
-            startBtn.textContent = '🎮 ИГРА ИДЕТ...';
-            startBtn.style.background = '#ff5722';
-            
-            // Сообщение
-            showMessage('Игра началась!', 
-                gameArea.offsetWidth / 2 - 60,
-                50
-            );
-        });
+            startBtn.textContent = '🎮 ИГРА...';
+        };
         
-        addBtn.addEventListener('click', () => {
-            if (!gameActive) {
-                showMessage('Сначала начни игру!', 50, 50);
-                return;
-            }
+        addBtn.onclick = function() {
+            if (!gameActive) return;
             
             for (let i = 0; i < 3; i++) {
-                setTimeout(() => createFly(), i * 200);
+                setTimeout(createFly, i * 300);
             }
-            
-            showMessage('+3 мушки', 
-                gameArea.offsetWidth / 2 - 40,
-                50
-            );
-        });
+        };
         
-        resetBtn.addEventListener('click', () => {
+        resetBtn.onclick = function() {
             gameActive = false;
             score = 0;
             scoreElement.textContent = score;
             
-            // Удалить все мушки
-            flies.forEach(fly => {
-                if (fly.element.parentNode) {
-                    fly.element.remove();
-                }
-            });
+            flies.forEach(f => f.element.remove());
             flies = [];
             updateFlyCount();
             
-            // Сбросить кнопку
             startBtn.disabled = false;
-            startBtn.textContent = '▶️ НАЧАТЬ ИГРУ';
-            startBtn.style.background = '#ff9800';
-        });
+            startBtn.textContent = '▶️ НАЧАТЬ';
+        };
         
-        // ========== КЛИК ПО ЛЯГУШКЕ ==========
-        frog.addEventListener('click', catchFlies);
+        // ========== СОБЫТИЯ ==========
+        frog.onclick = catchFlies;
         
-        // ========== АВТОМАТИЧЕСКИЕ ДЕЙСТВИЯ ==========
-        // Добавить демо-мушку при загрузке
-        setTimeout(() => {
-            if (!gameActive) {
-                createFly();
-                showMessage('Нажми "НАЧАТЬ ИГРУ"', 
-                    gameArea.offsetWidth / 2 - 70,
-                    50
-                );
-            }
-        }, 1000);
+        // Демо-мушка
+        setTimeout(createFly, 500);
         
-        // Автоматически добавлять мушки
+        // Автодобавление
         setInterval(() => {
-            if (gameActive && flies.length < 6 && Math.random() > 0.5) {
+            if (gameActive && flies.length < 6) {
                 createFly();
             }
-        }, 4000);
+        }, 3000);
         
-        // ========== TELEGRAM ИНТЕГРАЦИЯ ==========
-        // Простая интеграция, если в Telegram
-        if (typeof Telegram !== 'undefined' && Telegram.WebApp) {
+        // ========== TELEGRAM ==========
+        if (typeof Telegram !== 'undefined') {
             Telegram.WebApp.ready();
             Telegram.WebApp.expand();
-            
-            // Простая кнопка "Играть снова"
-            const playAgain = () => {
-                resetBtn.click();
-                startBtn.click();
-            };
-            
-            // Можно добавить кнопку в Telegram
-            setTimeout(() => {
-                if (Telegram.WebApp.MainButton) {
-                    Telegram.WebApp.MainButton.setText('🔄 Играть снова');
-                    Telegram.WebApp.MainButton.onClick(playAgain);
-                }
-            }, 2000);
         }
-        
-        // ========== КОНСОЛЬ ДЛЯ ОТЛАДКИ ==========
-        console.log('🐸 Игра "Лягушка-Мухолов" загружена!');
-        console.log('🎯 Нажми на лягушку или кнопку "НАЧАТЬ ИГРУ"');
     </script>
 </body>
 </html>
