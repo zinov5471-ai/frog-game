@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐸 Лягушка-Мухолов</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(#1b5e20, #2e7d32);
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            margin: 20px 0;
+            color: #ffeb3b;
+            text-shadow: 2px 2px 0 #000;
+        }
+        
+        .game-area {
+            background: #4caf50;
+            border: 8px solid #1b5e20;
+            border-radius: 25px;
+            height: 400px;
+            position: relative;
+            overflow: hidden;
+            margin: 20px auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        
+        /* ЛЯГУШКА - очень простая и видимая */
+        .frog {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 120px;
+            background: #4caf50;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 6px solid #2e7d32;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+            z-index: 100;
+        }
+        
+        .eye {
+            position: absolute;
+            top: 25px;
+            width: 35px;
+            height: 35px;
+            background: white;
+            border-radius: 50%;
+            border: 3px solid black;
+        }
+        
+        .eye-left {
+            left: 25px;
+        }
+        
+        .eye-right {
+            right: 25px;
+        }
+        
+        .pupil {
+            width: 15px;
+            height: 15px;
+            background: black;
+            border-radius: 50%;
+            margin: 7px auto;
+        }
+        
+        .mouth {
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 25px;
+            background: #333;
+            border-radius: 0 0 25px 25px;
+        }
+        
+        .tongue {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) scaleY(0);
+            width: 8px;
+            height: 0;
+            background: red;
+            transition: 0.3s;
+            border-radius: 4px;
+            z-index: 90;
+        }
+        
+        /* Мушки */
+        .fly {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background: black;
+            border-radius: 50%;
+            animation: fly 3s infinite;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+        
+        @keyframes fly {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(50px, -40px); }
+            50% { transform: translate(-30px, -60px); }
+            75% { transform: translate(40px, -20px); }
+            100% { transform: translate(0, 0); }
+        }
+        
+        .fly.eaten {
+            animation: none;
+            opacity: 0;
+            transform: scale(0);
+            transition: 0.5s;
+        }
+        
+        /* Лист */
+        .leaf {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 80px;
+            background: #8bc34a;
+            border-radius: 100px 100px 0 0;
+            z-index: 50;
+        }
+        
+        /* Статистика */
+        .stats {
+            background: rgba(0, 100, 0, 0.8);
+            padding: 15px;
+            border-radius: 15px;
+            margin: 20px auto;
+            font-size: 22px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-around;
+            max-width: 500px;
+        }
+        
+        .score {
+            color: #ffeb3b;
+            font-size: 28px;
+        }
+        
+        /* Кнопки */
+        .buttons {
+            margin: 20px;
+        }
+        
+        button {
+            background: linear-gradient(#ff9800, #f57c00);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 25px;
+            margin: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            border: 3px solid #e65100;
+            min-width: 180px;
+        }
+        
+        button:hover {
+            background: linear-gradient(#ff5722, #e64a19);
+        }
+        
+        button:active {
+            transform: scale(0.95);
+        }
+        
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        /* Всплывающий текст */
+        .popup {
+            position: absolute;
+            color: #ffeb3b;
+            font-weight: bold;
+            font-size: 20px;
+            animation: floatUp 1s forwards;
+            pointer-events: none;
+            z-index: 1000;
+            text-shadow: 2px 2px 0 #000;
+        }
+        
+        @keyframes floatUp {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-50px); opacity: 0; }
+        }
+        
+        /* Мобильная адаптация */
+        @media (max-width: 600px) {
+            .game-area {
+                height: 300px;
+            }
+            
+            .frog {
+                width: 120px;
+                height: 100px;
+            }
+            
+            button {
+                padding: 12px 20px;
+                font-size: 16px;
+                min-width: 140px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🐸 Лягушка-Мухолов 🦟</h1>
+        
+        <div class="stats">
+            <div>Поймано: <span class="score" id="score">0</span></div>
+            <div>Рекорд: <span class="score" id="record">0</span></div>
+            <div>Мушки: <span class="score" id="flyCount">0</span></div>
+        </div>
+        
+        <div class="game-area" id="gameArea">
+            <div class="leaf"></div>
+            
+            <div class="frog" id="frog">
+                <div class="eye eye-left"><div class="pupil"></div></div>
+                <div class="eye eye-right"><div class="pupil"></div></div>
+                <div class="mouth"></div>
+                <div class="tongue" id="tongue"></div>
+            </div>
+        </div>
+        
+        <div class="buttons">
+            <button id="startBtn">▶️ НАЧАТЬ ИГРУ</button>
+            <button id="addBtn">🦟 +3 Мушки</button>
+            <button id="resetBtn">🔄 ЗАНОВО</button>
+        </div>
+        
+        <p>Жми на лягушку, чтобы поймать мушку!</p>
+        <p style="color: #c8e6c9; margin-top: 10px;">🎯 Лягушка ловит все мушек вокруг себя</p>
+    </div>
+
+    <script>
+        // Элементы
+        const gameArea = document.getElementById('gameArea');
+        const frog = document.getElementById('frog');
+        const tongue = document.getElementById('tongue');
+        const scoreElement = document.getElementById('score');
+        const recordElement = document.getElementById('record');
+        const flyCountElement = document.getElementById('flyCount');
+        const startBtn = document.getElementById('startBtn');
+        const addBtn = document.getElementById('addBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        
+        // Переменные игры
+        let score = 0;
+        let record = localStorage.getItem('frogRecord') || 0;
+        let gameActive = false;
+        let flies = [];
+        
+        // Инициализация
+        recordElement.textContent = record;
+        
+        // Звуки
+        function playSound(url) {
+            try {
+                const audio = new Audio(url);
+                audio.volume = 0.3;
+                audio.play();
+            } catch(e) {
+                // Игнорируем ошибки звука
+            }
+        }
+        
+        // Создать мушку
+        function createFly() {
+            if (!gameActive && flies.length > 0) return;
+            
+            const fly = document.createElement('div');
+            fly.className = 'fly';
+            
+            // Случайная позиция
+            const x = 30 + Math.random() * (gameArea.offsetWidth - 60);
+            const y = 30 + Math.random() * (gameArea.offsetHeight - 150);
+            
+            fly.style.left = x + 'px';
+            fly.style.top = y + 'px';
+            
+            // Случайная скорость
+            const speed = 2 + Math.random() * 3;
+            fly.style.animationDuration = speed + 's';
+            
+            gameArea.appendChild(fly);
+            flies.push(fly);
+            updateFlyCount();
+            
+            // Автоудаление через 15 секунд
+            setTimeout(() => {
+                if (fly.parentNode && !fly.classList.contains('eaten')) {
+                    fly.remove();
+                    flies = flies.filter(f => f !== fly);
+                    updateFlyCount();
+                }
+            }, 15000);
+        }
+        
+        // Обновить счетчик мушек
+        function updateFlyCount() {
+            flyCountElement.textContent = flies.length;
+        }
+        
+        // Создать всплывающий текст
+        function createPopup(text, x, y) {
+            const popup = document.createElement('div');
+            popup.className = 'popup';
+            popup.textContent = text;
+            popup.style.left = x + 'px';
+            popup.style.top = y + 'px';
+            gameArea.appendChild(popup);
+            
+            setTimeout(() => popup.remove(), 1000);
+        }
+        
+        // Ловля мушек
+        function catchFlies() {
+            if (!gameActive) {
+                createPopup('Сначала начни игру!', 100, 100);
+                return;
+            }
+            
+            // Анимация языка
+            tongue.style.height = '100px';
+            tongue.style.transform = 'translateX(-50%) scaleY(1)';
+            
+            // Звук кваканья
+            playSound('https://assets.mixkit.co/sfx/preview/mixkit-frog-croak-760.mp3');
+            
+            // Анимация лягушки
+            frog.style.transform = 'translateX(-50%) scale(1.1)';
+            setTimeout(() => {
+                frog.style.transform = 'translateX(-50%) scale(1)';
+            }, 200);
+            
+            // Проверить каждую мушку
+            let caught = 0;
+            const frogRect = frog.getBoundingClientRect();
+            const gameRect = gameArea.getBoundingClientRect();
+            
+            flies.forEach((fly, index) => {
+                if (fly.classList.contains('eaten')) return;
+                
+                const flyRect = fly.getBoundingClientRect();
+                
+                // Простая проверка расстояния
+                const distance = Math.sqrt(
+                    Math.pow(flyRect.left - frogRect.left, 2) +
+                    Math.pow(flyRect.top - frogRect.top, 2)
+                );
+                
+                // Если мушка в радиусе 150px
+                if (distance < 150) {
+                    caught++;
+                    
+                    // Пометить как пойманную
+                    fly.classList.add('eaten');
+                    
+                    // Звук поедания
+                    playSound('https://assets.mixkit.co/sfx/preview/mixkit-bite-crunch-2290.mp3');
+                    
+                    // Всплывающий текст
+                    createPopup('+1 🎯', 
+                        flyRect.left - gameRect.left + 15,
+                        flyRect.top - gameRect.top
+                    );
+                    
+                    // Удалить через 0.5 секунд
+                    setTimeout(() => {
+                        if (fly.parentNode) {
+                            fly.remove();
+                            flies.splice(index, 1);
+                            updateFlyCount();
+                        }
+                    }, 500);
+                }
+            });
+            
+            // Обновить счет
+            if (caught > 0) {
+                score += caught;
+                scoreElement.textContent = score;
+                
+                // Обновить рекорд
+                if (score > record) {
+                    record = score;
+                    recordElement.textContent = record;
+                    localStorage.setItem('frogRecord', record);
+                    
+                    if (score % 10 === 0) {
+                        createPopup(`Рекорд: ${score}! 🏆`, 
+                            frogRect.left - gameRect.left + 75,
+                            frogRect.top - gameRect.top
+                        );
+                    }
+                }
+            } else if (flies.length > 0) {
+                createPopup('Промах! 👎', 
+                    frogRect.left - gameRect.left + 75,
+                    frogRect.top - gameRect.top
+                );
+            }
+            
+            // Убрать язык
+            setTimeout(() => {
+                tongue.style.height = '0';
+                tongue.style.transform = 'translateX(-50%) scaleY(0)';
+            }, 300);
+        }
+        
+        // Начать игру
+        startBtn.addEventListener('click', () => {
+            if (gameActive) return;
+            
+            gameActive = true;
+            score = 0;
+            scoreElement.textContent = score;
+            
+            // Очистить старых мушек
+            flies.forEach(fly => fly.remove());
+            flies = [];
+            
+            // Создать 5 мушек
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => createFly(), i * 300);
+            }
+            
+            startBtn.disabled = true;
+            startBtn.textContent = '🎮 ИГРА ИДЕТ...';
+            startBtn.style.background = 'linear-gradient(#ff5722, #e64a19)';
+            
+            createPopup('Игра началась!', 
+                gameArea.offsetWidth / 2 - 50,
+                gameArea.offsetHeight / 2
+            );
+        });
+        
+        // Добавить мушек
+        addBtn.addEventListener('click', () => {
+            if (!gameActive) {
+                createPopup('Сначала начни игру!', 
+                    gameArea.offsetWidth / 2 - 50,
+                    gameArea.offsetHeight / 2
+                );
+                return;
+            }
+            
+            for (let i = 0; i < 3; i++) {
+                setTimeout(() => createFly(), i * 200);
+            }
+            
+            createPopup('+3 мушки 🦟', 
+                gameArea.offsetWidth / 2 - 30,
+                gameArea.offsetHeight / 2
+            );
+        });
+        
+        // Сброс игры
+        resetBtn.addEventListener('click', () => {
+            gameActive = false;
+            score = 0;
+            scoreElement.textContent = score;
+            
+            flies.forEach(fly => fly.remove());
+            flies = [];
+            updateFlyCount();
+            
+            startBtn.disabled = false;
+            startBtn.textContent = '▶️ НАЧАТЬ ИГРУ';
+            startBtn.style.background = 'linear-gradient(#ff9800, #f57c00)';
+        });
+        
+        // Клик по лягушке
+        frog.addEventListener('click', catchFlies);
+        
+        // Автоматически добавить демо-мушку
+        setTimeout(() => {
+            if (!gameActive) {
+                createFly();
+                createPopup('Нажми "НАЧАТЬ ИГРУ"!', 
+                    gameArea.offsetWidth / 2 - 60,
+                    50
+                );
+            }
+        }, 1000);
+        
+        // Создавать мушки автоматически
+        setInterval(() => {
+            if (gameActive && flies.length < 8 && Math.random() > 0.7) {
+                createFly();
+            }
+        }, 3000);
+        
+        // Интеграция с Telegram
+        if (typeof Telegram !== 'undefined' && Telegram.WebApp) {
+            Telegram.WebApp.ready();
+            Telegram.WebApp.expand();
+            
+            // Кнопка "Поделиться"
+            Telegram.WebApp.MainButton.setText('🎮 Играть еще!');
+            Telegram.WebApp.MainButton.onClick(() => {
+                location.reload();
+            });
+            
+            // Показывать кнопку при хорошем результате
+            setInterval(() => {
+                if (score > 5 && gameActive) {
+                    Telegram.WebApp.MainButton.show();
+                }
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
